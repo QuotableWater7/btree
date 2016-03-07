@@ -80,6 +80,7 @@ describe('#insert', function () {
     expect(tree.root).to.eq(node2);
     expect(tree.root.left).to.eq(node1);
     expect(tree.root.right).to.eq(node3);
+    expect(tree.height()).to.eq(2);
   });
 
   it('rebalances tree to left when right side gets too long, case 2', function () {
@@ -94,6 +95,7 @@ describe('#insert', function () {
     expect(tree.root).to.eq(node3);
     expect(tree.root.left).to.eq(node1);
     expect(tree.root.right).to.eq(node2);
+    expect(tree.height()).to.eq(2);
   });
 
   it('rebalances tree to right when left side gets too long', function () {
@@ -108,6 +110,7 @@ describe('#insert', function () {
     expect(tree.root).to.eq(node2);
     expect(tree.root.right).to.eq(node1);
     expect(tree.root.left).to.eq(node3);
+    expect(tree.height()).to.eq(2);
   });
 
   it('rebalances tree to right when left side gets too long, case 2', function () {
@@ -122,6 +125,7 @@ describe('#insert', function () {
     expect(tree.root).to.eq(node3);
     expect(tree.root.right).to.eq(node1);
     expect(tree.root.left).to.eq(node2);
+    expect(tree.height()).to.eq(2);
   });
 
 });

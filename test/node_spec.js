@@ -2,7 +2,7 @@
 
 var chai = require('chai');
 var expect = chai.expect;
-var BinaryTree = require('../index');
+var BinaryTree = require('../src/index');
 var Tree = BinaryTree.Tree;
 var Node = BinaryTree.Node;
 

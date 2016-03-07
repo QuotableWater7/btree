@@ -3,25 +3,21 @@
 module.exports.Tree = function (root) {
   this.root = root
 
-  this.insert = function (node) {
+  this.insert = function (node, currentRoot) {
+    var currentRoot = arguments.length > 1 ? currentRoot : this.root;
+
     if (!this.root) {
       this.root = node;
-    } else {
-      this._insert(node, this.root);
-    }
-  },
-
-  this._insert = function (node, currentRoot) {
-    if (node.value >= currentRoot.value) {
+    } else if (node.value >= currentRoot.value) {
       if (currentRoot.right) {
-        this._insert(node, currentRoot.right);
+        this.insert(node, currentRoot.right);
       } else {
         currentRoot.setRightChild(node);
         this.rebalance(currentRoot.parent);
       }
     } else if (node.value < currentRoot.value) {
       if (currentRoot.left) {
-        this._insert(node, currentRoot.left);
+        this.insert(node, currentRoot.left);
       } else {
         currentRoot.setLeftChild(node);
         this.rebalance(currentRoot.parent);
@@ -90,13 +86,10 @@ module.exports.Tree = function (root) {
   };
 
   this.height = function (node) {
-    return arguments.length > 0 ? this._height(node) : this._height(this.root);
-  };
+    var node = arguments.length > 0 ? node : this.root;
+    if (!node) { return 0; }
 
-  this._height = function (currentRoot) {
-    if (!currentRoot) { return 0; }
-
-    return 1 + Math.max(this._height(currentRoot.left), this._height(currentRoot.right));
+    return 1 + Math.max(this.height(node.left), this.height(node.right));
   };
 }
 

@@ -34,22 +34,22 @@ module.exports.Tree = function (root) {
       var diff = height_left - height_right;
       if (diff === 2) {
         var child = node.left;
+
         if (this.height(child.right) > this.height(child.left)) {
           this.rotateLeft(child);
           node.left = child.parent;
-          this.rotateRight(node);
-        } else {
-          this.rotateRight(node);
         }
+
+        this.rotateRight(node);
       } else if (diff === -2) {
         var child = node.right;
+
         if (this.height(child.left) > this.height(child.right)) {
           this.rotateRight(child);
           node.right = child.parent;
-          this.rotateLeft(node);
-        } else {
-          this.rotateLeft(node);
         }
+
+        this.rotateLeft(node);
       }
 
       this.rebalance(node.parent);

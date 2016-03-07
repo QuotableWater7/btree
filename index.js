@@ -3,49 +3,53 @@
 module.exports.Tree = function (root) {
   this.root = root
 
-  this.insert = function (node, currentRoot) {
-    currentRoot = currentRoot || this.root;
+  this.insert = function (node) {
+    if (!this.root) {
+      this.root = node;
+    } else {
+      this._insert(node, this.root);
+    }
+  },
 
-    if (!this.root) { this.root = node; }
-    else if (node.value >= currentRoot.value) {
-      if (!!currentRoot.right) {
-        this.insert(node, currentRoot.right);
+  this._insert = function (node, currentRoot) {
+    if (node.value >= currentRoot.value) {
+      if (currentRoot.right) {
+        this._insert(node, currentRoot.right);
       } else {
         currentRoot.setRightChild(node);
+        this.rebalance(currentRoot.parent);
       }
     } else if (node.value < currentRoot.value) {
-      if (!!currentRoot.left) {
-        this.insert(node, currentRoot.left);
+      if (currentRoot.left) {
+        this._insert(node, currentRoot.left);
       } else {
         currentRoot.setLeftChild(node);
+        this.rebalance(currentRoot.parent);
       }
     }
 
-    this.rebalance(node.parent);
   };
 
   this.rebalance = function (node) {
     if (!node) { return; }
-
-    var left = node.left;
-    var right = node.right;
-    var height_left = this._height(left);
-    var height_right = this._height(right);
+    var height_left = this.height(node.left);
+    var height_right = this.height(node.right);
+    debugger;
 
     var diff = height_left - height_right;
     if (diff === 2) {
-      if (this._height(left.right) > this._height(left.left)) {
-        this.rotateLeft(left);
-        this.rotateRight(left);
+      var child = node.left;
+      if (this.height(child.right) > this.height(child.left)) {
+        this.rotateLeft(child);
+        this.rotateRight(child);
       } else {
         this.rotateRight(node);
       }
     } else if (diff === -2) {
-      if (this._height(right.left) > this._height(right.right)) {
-        this.rotateRight(right);
-        // console.log('********');
-        // console.log(this.root.right.value)
-        this.rotateLeft(right);
+      var child = node.right;
+      if (this.height(child.left) > this.height(child.right)) {
+        this.rotateRight(child);
+        this.rotateLeft(child);
       } else {
         this.rotateLeft(node);
       }
@@ -55,35 +59,37 @@ module.exports.Tree = function (root) {
   };
 
   this.rotateLeft = function (node) {
-    // console.log('rotate left', node.value)
     var parent = node.parent;
     var child = node.right;
-    // console.log(parent.value);
-    // console.log(node.value);
-    node.right = child.left;
-    node.parent = child;
+    var child_left_child = child.left;
+
     child.parent = parent;
-    child.left = node;
     if (parent) { parent.right = child; }
+    child.left = node;
+
+    node.parent = child;
+    node.right = child_left_child;
+
     if (!parent) { this.root = child; }
   };
 
   this.rotateRight = function (node) {
     var parent = node.parent;
     var child = node.left;
-    // console.log('rotate right', node.value);
-    // console.log('**** parent', parent.value, '**** child', child.value);
+    var child_right_child = child.right;
 
-    node.left = child.right;
-    node.parent = child;
     child.parent = parent;
-    child.right = node;
     if (parent) { parent.left = child; }
+    child.right = node;
+
+    node.parent = child;
+    node.left = child_right_child;
+
     if (!parent) { this.root = child; }
   };
 
-  this.height = function () {
-    return this._height(this.root);
+  this.height = function (node) {
+    return arguments.length > 0 ? this._height(node) : this._height(this.root);
   };
 
   this._height = function (currentRoot) {
@@ -112,3 +118,14 @@ module.exports.Node = function (opts) {
     node.parent = this;
   };
 }
+
+var Tree = module.exports.Tree;
+var Node = module.exports.Node;
+
+var tree = new Tree();
+var node1 = new Node({ value: 10 });
+var node2 = new Node({ value: 20 });
+var node3 = new Node({ value: 30 });
+tree.insert(node1);
+tree.insert(node2);
+tree.insert(node3);

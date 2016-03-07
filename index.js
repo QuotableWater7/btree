@@ -96,7 +96,9 @@ module.exports.Tree = function (root) {
 
 module.exports.Node = function (opts) {
   opts = opts || {};
-  if (!opts.value) { throw new Error('Must provide value for node'); }
+  if (typeof opts.value === 'undefined') {
+    throw new Error('Must provide value for node');
+  }
 
   return {
     value: opts.value,

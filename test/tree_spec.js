@@ -76,7 +76,6 @@ describe('#insert', function () {
     tree.insert(node1);
     tree.insert(node2);
     tree.insert(node3);
-    console.log('*****', tree.root.value);
 
     expect(tree.root).to.eq(node2);
     expect(tree.root.left).to.eq(node1);
@@ -95,6 +94,34 @@ describe('#insert', function () {
     expect(tree.root).to.eq(node3);
     expect(tree.root.left).to.eq(node1);
     expect(tree.root.right).to.eq(node2);
+  });
+
+  it('rebalances tree to right when left side gets too long', function () {
+    var tree = new Tree();
+    var node1 = new Node({ value: 30 });
+    var node2 = new Node({ value: 20 });
+    var node3 = new Node({ value: 10 });
+    tree.insert(node1);
+    tree.insert(node2);
+    tree.insert(node3);
+
+    expect(tree.root).to.eq(node2);
+    expect(tree.root.right).to.eq(node1);
+    expect(tree.root.left).to.eq(node3);
+  });
+
+  it('rebalances tree to right when left side gets too long, case 2', function () {
+    var tree = new Tree();
+    var node1 = new Node({ value: 30 });
+    var node2 = new Node({ value: 10 });
+    var node3 = new Node({ value: 20 });
+    tree.insert(node1);
+    tree.insert(node2);
+    tree.insert(node3);
+
+    expect(tree.root).to.eq(node3);
+    expect(tree.root.right).to.eq(node1);
+    expect(tree.root.left).to.eq(node2);
   });
 
 });

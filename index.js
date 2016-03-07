@@ -34,14 +34,14 @@ module.exports.Tree = function (root) {
     if (!node) { return; }
     var height_left = this.height(node.left);
     var height_right = this.height(node.right);
-    debugger;
 
     var diff = height_left - height_right;
     if (diff === 2) {
       var child = node.left;
       if (this.height(child.right) > this.height(child.left)) {
         this.rotateLeft(child);
-        this.rotateRight(child);
+        node.left = child.parent;
+        this.rotateRight(node);
       } else {
         this.rotateRight(node);
       }
@@ -49,7 +49,8 @@ module.exports.Tree = function (root) {
       var child = node.right;
       if (this.height(child.left) > this.height(child.right)) {
         this.rotateRight(child);
-        this.rotateLeft(child);
+        node.right = child.parent;
+        this.rotateLeft(node);
       } else {
         this.rotateLeft(node);
       }
@@ -64,7 +65,7 @@ module.exports.Tree = function (root) {
     var child_left_child = child.left;
 
     child.parent = parent;
-    if (parent) { parent.right = child; }
+    if (parent) { parent.left = child; }
     child.left = node;
 
     node.parent = child;
@@ -79,7 +80,7 @@ module.exports.Tree = function (root) {
     var child_right_child = child.right;
 
     child.parent = parent;
-    if (parent) { parent.left = child; }
+    if (parent) { parent.right = child; }
     child.right = node;
 
     node.parent = child;
@@ -118,14 +119,3 @@ module.exports.Node = function (opts) {
     node.parent = this;
   };
 }
-
-var Tree = module.exports.Tree;
-var Node = module.exports.Node;
-
-var tree = new Tree();
-var node1 = new Node({ value: 10 });
-var node2 = new Node({ value: 20 });
-var node3 = new Node({ value: 30 });
-tree.insert(node1);
-tree.insert(node2);
-tree.insert(node3);

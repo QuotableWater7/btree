@@ -57,3 +57,9 @@ describe('#setRightChild', function () {
   });
 
 });
+
+describe('#largestChild', function () {
+  it('returns largest child when both are present', function () {
+
+  });
+});

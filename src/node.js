@@ -20,6 +20,18 @@ module.exports = function (opts) {
     setLeftChild: function (node) {
       this.left = node;
       node.parent = this;
+    },
+
+    isRoot: function () {
+      return !this.parent;
+    },
+
+    largestChild: function () {
+      if (this.right && this.left) {
+        return this.right.value > this.left.value ? this.right : this.left;
+      }
+
+      return this.right ? this.right : this.left;
     }
   };
 }

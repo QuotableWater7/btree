@@ -39,6 +39,48 @@ module.exports = function (root) {
       }
     },
 
+    // make the max value be at root
+    invert: function (node) {
+      var node = arguments.length > 0 ? node : this.root;
+      if (!node) { return; }
+      if (this.height(node) === 1) { return; }
+
+      this.invert(node.left);
+      this.invert(node.right);
+
+      var parent = node;
+      var child = node.largestChild();
+      this.swap(parent, child);
+
+      if (child.isRoot()) { this.root = child; }
+    },
+
+    swap: function (parent, child) {
+      var child_right = child.right;
+      var child_left = child.left;
+      var parent_parent = parent.parent;
+
+      console.log('******', parent_parent.value, parent.value, child.value);
+
+      if (parent.right === child) {
+        var parent_left = parent.left
+
+        child.right = parent;
+        child.left = parent_left;
+      } else {
+        var parent_right = parent.right;
+        child.left = parent;
+        child.right = parent_right;
+      }
+
+      parent.parent = child;
+      parent.right = child_right;
+      parent.left = child_left;
+      child.parent = parent_parent;
+
+      if (child.isRoot()) { this.root = child; }
+    },
+
     rebalance: function (node) {
       if (!node) { return; }
       var height_left = this.height(node.left);
@@ -106,3 +148,8 @@ module.exports = function (root) {
     }
   };
 }
+
+var tree = new module.exports();
+tree.bulkInsert(50, 25, 75);
+var root = tree.root;
+debugger;

@@ -144,3 +144,68 @@ describe('#insert', function () {
   });
 
 });
+
+describe.only('#swap', function () {
+  var tree;
+  var root;
+
+  beforeEach(function () {
+    tree = new Tree();
+    tree.bulkInsert(50, 25, 75);
+    root = tree.root;
+  });
+
+  it('swaps the two elements when child is the left child', function () {
+    tree.swap(root, root.left);
+
+    expect(tree.root.value).to.eq(25);
+    expect(tree.root.left.value).to.eq(50);
+    expect(tree.root.right.value).to.eq(75);
+  });
+
+  it('swaps the two elements when child is the right child', function () {
+    tree.swap(root, root.right);
+
+    expect(tree.root.value).to.eq(75);
+    expect(tree.root.left.value).to.eq(25);
+    expect(tree.root.right.value).to.eq(50);
+  });
+
+  it('correctly updates the parents on the swapped elements', function () {
+    tree.swap(tree.root, tree.root.right);
+    expect(tree.root.right.parent).to.eq(tree.root);
+
+    tree.swap(tree.root, tree.root.left);
+    expect(tree.root.left.parent).to.eq(tree.root);
+  });
+
+  it.only('can swap at more than 1 level deep', function () {
+    tree.bulkInsert(60, 80);
+
+    // tree.swap(root.right, root.right.left);
+    // expect(tree.root.right.value).to.eq(60);
+
+    tree.swap(tree.root.right, tree.root.right.right);
+    expect(tree.root.right.value).to.eq(80);
+  });
+});
+
+describe('#invert', function () {
+  it('puts the max value at the root', function () {
+    var tree = new Tree();
+    tree.bulkInsert(20, 25);
+    tree.invert();
+
+    expect(tree.root.value).to.eq(25);
+  });
+
+  it('inverts all the subtrees', function () {
+    var tree = new Tree();
+    tree.bulkInsert(20, 25, 15);
+    tree.invert();
+
+    expect(tree.root.value).to.eq(25);
+    expect(tree.root.left.value).to.eq(20);
+    expect(tree.root.right.value).to.eq(15);
+  });
+});

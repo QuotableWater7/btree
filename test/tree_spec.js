@@ -41,8 +41,23 @@ describe('#height', function () {
   });
 });
 
-describe('#insert', function () {
+describe('bulk insert', function () {
+  it('turns an array of numbers into a tree with nodes', function () {
+    var tree = new Tree();
+    tree.bulkInsert(10, 5, 15, 3, 6, 12, 18, 21);
 
+    expect(tree.root.value).to.eq(10);
+    expect(tree.root.left.value).to.eq(5);
+    expect(tree.root.left.left.value).to.eq(3);
+    expect(tree.root.left.right.value).to.eq(6);
+    expect(tree.root.right.value).to.eq(15);
+    expect(tree.root.right.left.value).to.eq(12);
+    expect(tree.root.right.right.value).to.eq(18);
+    expect(tree.root.right.right.right.value).to.eq(21);
+  });
+});
+
+describe('#insert', function () {
   it('inserts to root when there is no root', function () {
     var tree = new BinaryTree.Tree();
     var node = new BinaryTree.Node({ value: 10 });

@@ -1,8 +1,21 @@
 'use strict';
 
+var Node = require('./node');
+
 module.exports = function (root) {
   return {
     root: root,
+
+    bulkInsert: function () {
+      var numbers = Array.prototype.slice.call(arguments);
+      var nodes = numbers.map(function (number) {
+        return new Node({ value: number });
+      });
+
+      nodes.forEach(function (node) {
+        this.insert(node);
+      }.bind(this));
+    },
 
     insert: function (node, currentRoot) {
       var currentRoot = arguments.length > 1 ? currentRoot : this.root;

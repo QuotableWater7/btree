@@ -6,6 +6,13 @@ module.exports = function (root) {
   return {
     root: root,
 
+    updateNodePositionMetadata: function () {
+      this.inOrderTraversal(function (node, sequence, depth) {
+        node.sequence = sequence;
+        node.depth = depth;
+      });
+    },
+
     inOrderTraversal: function (callback, currentNode, depth) {
       if (arguments.length === 1) {
         currentNode = this.root;

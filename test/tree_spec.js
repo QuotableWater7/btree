@@ -241,3 +241,33 @@ describe('#inOrderTraversal', function () {
     });
   });
 });
+
+describe.only('#updatePositionMetadata', function () {
+  var tree;
+  var nodes;
+
+  beforeEach(function () {
+    tree = new Tree();
+    nodes = [
+      new Node({ value: 12 }),
+      new Node({ value: 15 }),
+      new Node({ value: 18 }),
+      new Node({ value: 21 }),
+      new Node({ value: 24 }),
+    ];
+    nodes.forEach(function (node) {
+      tree.insert(node);
+    });
+  });
+
+  it('assigns sequence number on all nodes in left-to-right order', function () {
+    var currentSequence = 0;
+    tree.updateNodePositionMetadata();
+    console.log('******', tree.root.value);
+    expect(tree.root).to.eq(nodes[1]);
+
+    nodes.forEach(function (node) {
+      expect(node.sequence).to.eq(++currentSequence);
+    });
+  });
+});

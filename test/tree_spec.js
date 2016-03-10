@@ -219,3 +219,25 @@ describe('#invert', function () {
     expect(tree.root.right.value).to.eq(15);
   });
 });
+
+describe('#inOrderTraversal', function () {
+  it('yields the tree nodes in order, with metadata', function () {
+    var tree = new Tree();
+    tree.bulkInsert(50, 25, 75, 12, 80, 30);
+    var node_order = [
+      { node: tree.root.left.left, depth: 3 },
+      { node: tree.root.left, depth: 2 },
+      { node: tree.root.left.right, depth: 3 },
+      { node: tree.root, depth: 1 },
+      { node: tree.root.right, depth: 2 },
+      { node: tree.root.right.right, depth: 3 }
+    ];
+
+    tree.inOrderTraversal(function (node, sequence, depth) {
+      var node_order_entry = node_order[sequence - 1];
+
+      expect(node).to.eq(node_order_entry.node);
+      expect(depth).to.eq(node_order_entry.depth);
+    });
+  });
+});

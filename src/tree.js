@@ -6,6 +6,32 @@ module.exports = function (root) {
   return {
     root: root,
 
+    inOrderTraversal: function (callback, currentNode, depth) {
+      if (arguments.length === 1) {
+        currentNode = this.root;
+        this._sequence = 1;
+        depth = 1;
+      }
+
+      if (currentNode.left) {
+        this.inOrderTraversal(
+          callback,
+          currentNode.left,
+          depth + 1
+        );
+      }
+
+      callback(currentNode, this._sequence++, depth);
+
+      if (currentNode.right) {
+        this.inOrderTraversal(
+          callback,
+          currentNode.right,
+          depth + 1
+        );
+      }
+    },
+
     bulkInsert: function () {
       var numbers = Array.prototype.slice.call(arguments);
       var nodes = numbers.map(function (number) {

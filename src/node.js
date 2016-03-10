@@ -11,6 +11,8 @@ module.exports = function (opts) {
     left: opts.left,
     right: opts.right,
     parent: opts.parent,
+    seq: null,
+    depth: null,
 
     setRightChild: function (node) {
       this.right = node;

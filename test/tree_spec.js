@@ -145,7 +145,7 @@ describe('#insert', function () {
 
 });
 
-describe.only('#swap', function () {
+describe('#swap', function () {
   var tree;
   var root;
 
@@ -179,14 +179,24 @@ describe.only('#swap', function () {
     expect(tree.root.left.parent).to.eq(tree.root);
   });
 
-  it.only('can swap at more than 1 level deep', function () {
+  it('can swap at more than 1 level deep', function () {
     tree.bulkInsert(60, 80);
 
-    // tree.swap(root.right, root.right.left);
-    // expect(tree.root.right.value).to.eq(60);
+    tree.swap(root.right, root.right.left);
+    expect(tree.root.right.value).to.eq(60);
 
     tree.swap(tree.root.right, tree.root.right.right);
     expect(tree.root.right.value).to.eq(80);
+
+    tree.swap(tree.root, tree.root.right);
+    expect(tree.root.value).to.eq(80);
+    expect(tree.root.right.value).to.eq(50);
+    expect(tree.root.right.parent).to.eq(tree.root);
+
+    tree.swap(tree.root, tree.root.left);
+    expect(tree.root.value).to.eq(25);
+    expect(tree.root.left.value).to.eq(80);
+    expect(tree.root.left.parent).to.eq(tree.root);
   });
 });
 

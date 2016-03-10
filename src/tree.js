@@ -60,8 +60,6 @@ module.exports = function (root) {
       var child_left = child.left;
       var parent_parent = parent.parent;
 
-      console.log('******', parent_parent.value, parent.value, child.value);
-
       if (parent.right === child) {
         var parent_left = parent.left
 
@@ -69,8 +67,17 @@ module.exports = function (root) {
         child.left = parent_left;
       } else {
         var parent_right = parent.right;
+
         child.left = parent;
         child.right = parent_right;
+      }
+
+      if (parent_parent) {
+        if (parent_parent.right === parent) {
+          parent_parent.right = child;
+        } else {
+          parent_parent.left = child;
+        }
       }
 
       parent.parent = child;
@@ -148,8 +155,3 @@ module.exports = function (root) {
     }
   };
 }
-
-var tree = new module.exports();
-tree.bulkInsert(50, 25, 75);
-var root = tree.root;
-debugger;

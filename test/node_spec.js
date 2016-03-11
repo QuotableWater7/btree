@@ -59,7 +59,34 @@ describe('#setRightChild', function () {
 });
 
 describe('#largestChild', function () {
-  it('returns largest child when both are present', function () {
+  var left;
+  var right;
+  var root;
 
+  beforeEach(function () {
+    left = new Node({ value: 50 });
+    right = new Node({ value: 100 });
+    root = new Node({ value: 10, left: left, right: right });
+  });
+
+  it('returns largest child when both are present', function () {
+    expect(root.largestChild()).to.eq(root.right);
+
+    root.left = right;
+    root.right = left;
+
+    expect(root.largestChild()).to.eq(root.left);
+  });
+
+  it('returns left child if it is present and right child is not', function () {
+    delete root.right;
+
+    expect(root.largestChild()).to.eq(root.left);
+  });
+
+  it('returns right child if it is present and left child is not', function () {
+    delete root.left;
+
+    expect(root.largestChild()).to.eq(root.right);
   });
 });

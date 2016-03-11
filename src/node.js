@@ -33,7 +33,7 @@ module.exports = function (opts) {
         return this.right.value > this.left.value ? this.right : this.left;
       }
 
-      return this.right ? this.right : this.left;
+      return typeof this.right !== 'undefined' ? this.right : this.left;
     }
   };
 }

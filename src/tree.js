@@ -1,10 +1,43 @@
 'use strict';
 
+var _ = require('underscore');
 var Node = require('./node');
+
+function spaces(number) {
+  var spaces = '';
+  for (var i = 0; i < number; i++) { spaces += ' '; }
+  return spaces;
+}
 
 module.exports = function (root) {
   return {
     root: root,
+
+    print: function () {
+      this.updateNodePositionMetadata();
+      var nodes = this.nodes();
+      var nodes_by_depth = _.groupBy(nodes, 'depth');
+      var total_spaces = 50;
+      var spaces_per_node = total_spaces / nodes.length;
+
+      _.each(nodes_by_depth, function (nodes_at_depth) {
+        var output = '';
+        for (var i = 0; i < nodes_at_depth.length; i++) {
+          var node = nodes_at_depth[i];
+          var prev_node = nodes_at_depth[i - 1];
+          var prev_sequence = prev_node ? prev_node.sequence : 0;
+          output += spaces((node.sequence - prev_sequence) * spaces_per_node - 1);
+          output += node.value;
+        }
+        console.log(output + '\n');
+      });
+    },
+
+    nodes: function () {
+      var all_nodes = [];
+      this.inOrderTraversal(function (node) { all_nodes.push(node); });
+      return all_nodes;
+    },
 
     postOrderTraversal: function (callback, currentNode) {
       currentNode = arguments.length > 1 ? currentNode : this.root;

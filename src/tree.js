@@ -17,8 +17,7 @@ module.exports = function (root) {
       this.updateNodePositionMetadata();
       var nodes = this.nodes();
       var nodes_by_depth = _.groupBy(nodes, 'depth');
-      var total_spaces = 50;
-      var spaces_per_node = total_spaces / nodes.length;
+      var spaces_per_node = 5;
 
       _.each(nodes_by_depth, function (nodes_at_depth) {
         var output = '';

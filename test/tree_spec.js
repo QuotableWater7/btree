@@ -113,6 +113,18 @@ describe('#insert', function () {
     expect(tree.height()).to.eq(2);
   });
 
+  it('rebalances tree to left when right side gets too long, case 3', function () {
+    var tree = new Tree();
+    tree.bulkInsert(1, 2, 3, 4, 5, 6);
+
+    expect(tree.root.value).to.eq(4);
+    expect(tree.root.left.value).to.eq(2);
+    expect(tree.root.left.left.value).to.eq(1);
+    expect(tree.root.left.right.value).to.eq(3);
+    expect(tree.root.right.value).to.eq(5);
+    expect(tree.root.right.right.value).to.eq(6);
+  });
+
   it('rebalances tree to right when left side gets too long', function () {
     var tree = new Tree();
     var node1 = new Node({ value: 30 });
@@ -141,6 +153,18 @@ describe('#insert', function () {
     expect(tree.root.right).to.eq(node1);
     expect(tree.root.left).to.eq(node2);
     expect(tree.height()).to.eq(2);
+  });
+
+  it('rebalances tree to right when left side gets too long, case 3', function () {
+    var tree = new Tree();
+    tree.bulkInsert(6, 5, 4, 3, 2, 1);
+
+    expect(tree.root.value).to.eq(3);
+    expect(tree.root.left.value).to.eq(2);
+    expect(tree.root.left.left.value).to.eq(1);
+    expect(tree.root.right.value).to.eq(5);
+    expect(tree.root.right.left.value).to.eq(4);
+    expect(tree.root.right.right.value).to.eq(6);
   });
 
 });
@@ -242,7 +266,7 @@ describe('#inOrderTraversal', function () {
   });
 });
 
-describe.only('#updatePositionMetadata', function () {
+describe('#updatePositionMetadata', function () {
   var tree;
   var nodes;
 
@@ -263,7 +287,7 @@ describe.only('#updatePositionMetadata', function () {
   it('assigns sequence number on all nodes in left-to-right order', function () {
     var currentSequence = 0;
     tree.updateNodePositionMetadata();
-    console.log('******', tree.root.value);
+
     expect(tree.root).to.eq(nodes[1]);
 
     nodes.forEach(function (node) {

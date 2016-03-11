@@ -156,7 +156,13 @@ module.exports = function (root) {
       var child_left_child = child.left;
 
       child.parent = parent;
-      if (parent) { parent.left = child; }
+      if (parent) {
+        if (parent.right === node) {
+          parent.right = child;
+        } else if (parent.left === node) {
+          parent.left = child;
+        }
+      }
       child.left = node;
 
       node.parent = child;
@@ -171,7 +177,13 @@ module.exports = function (root) {
       var child_right_child = child.right;
 
       child.parent = parent;
-      if (parent) { parent.right = child; }
+      if (parent) {
+        if (parent.right === node) {
+          parent.right = child;
+        } else if (parent.left === node) {
+          parent.left = child;
+        }
+      }
       child.right = node;
 
       node.parent = child;

@@ -6,6 +6,34 @@ module.exports = function (root) {
   return {
     root: root,
 
+    postOrderTraversal: function (callback, currentNode) {
+      currentNode = arguments.length > 1 ? currentNode : this.root;
+
+      if (currentNode.left) {
+        this.preOrderTraversal(callback, currentNode.left);
+      }
+
+      if (currentNode.right) {
+        this.preOrderTraversal(callback, currentNode.right);
+      }
+
+      callback(currentNode);
+    },
+
+    preOrderTraversal: function (callback, currentNode) {
+      currentNode = arguments.length > 1 ? currentNode : this.root;
+
+      callback(currentNode);
+
+      if (currentNode.left) {
+        this.preOrderTraversal(callback, currentNode.left);
+      }
+
+      if (currentNode.right) {
+        this.preOrderTraversal(callback, currentNode.right);
+      }
+    },
+
     updateNodePositionMetadata: function () {
       this.inOrderTraversal(function (node, sequence, depth) {
         node.sequence = sequence;

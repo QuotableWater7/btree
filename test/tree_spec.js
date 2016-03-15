@@ -235,12 +235,18 @@ describe('#invert', function () {
 
   it('inverts all the subtrees', function () {
     var tree = new Tree();
-    tree.bulkInsert(20, 25, 15);
+    tree.bulkInsert(20, 25, 15, 22, 28);
+    expect(tree.root.value).to.eq(20);
+    expect(tree.root.left.value).to.eq(15);
+    expect(tree.root.right.value).to.eq(25);
+
     tree.invert();
 
-    expect(tree.root.value).to.eq(25);
-    expect(tree.root.left.value).to.eq(20);
-    expect(tree.root.right.value).to.eq(15);
+    expect(tree.root.value).to.eq(28);
+    expect(tree.root.left.value).to.eq(15);
+    expect(tree.root.right.value).to.eq(20);
+    expect(tree.root.right.left.value).to.eq(22);
+    expect(tree.root.right.right.value).to.eq(25);
   });
 });
 

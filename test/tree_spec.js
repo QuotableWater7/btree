@@ -41,6 +41,38 @@ describe('#height', function () {
   });
 });
 
+describe.only('#search', function () {
+  var tree;
+
+  beforeEach(function () {
+    tree = new Tree();
+  });
+
+  it('can return the matching node from left tree', function () {
+    tree.bulkInsert(5, 3, 6, 4);
+
+    expect(tree.search(4).value).to.eq(4);
+  });
+
+  it('can return the matching node from right tree', function () {
+    tree.bulkInsert(5, 3, 6, 4);
+
+    expect(tree.search(6).value).to.eq(6);
+  });
+
+  it('can return the matching node from root', function () {
+    tree.bulkInsert(5);
+
+    expect(tree.search(5).value).to.eq(5);
+  });
+
+  it('returns null when the node is not found', function () {
+    tree.bulkInsert(5, 3, 6, 4);
+
+    expect(tree.search(8)).to.eq(null);
+  });
+});
+
 describe('bulk insert', function () {
   it('turns an array of numbers into a tree with nodes', function () {
     var tree = new Tree();

@@ -38,6 +38,20 @@ module.exports = function (root) {
       return all_nodes;
     },
 
+    search: function (key, currentNode) {
+      var currentNode = arguments.length > 1 ? currentNode : this.root;
+
+      if (!currentNode) {
+        return null;
+      } else if (currentNode.value === key) {
+        return currentNode;
+      } else if (key < currentNode.value) {
+        return this.search(key, currentNode.left);
+      } else if (key > currentNode.value) {
+        return this.search(key, currentNode.right);
+      }
+    },
+
     postOrderTraversal: function (callback, currentNode) {
       currentNode = arguments.length > 1 ? currentNode : this.root;
 

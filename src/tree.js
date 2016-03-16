@@ -1,6 +1,5 @@
 'use strict';
 
-var _ = require('underscore');
 var Node = require('./node');
 var spaces = require('./util/spaces');
 
@@ -13,12 +12,19 @@ module.exports = function (opts) {
     print: function () {
       var self = this;
 
-      this.updateNodePositionMetadata();
-      var nodes = this.nodes();
-      var nodes_by_depth = _.groupBy(nodes, 'depth');
+      var nodes = {};
+      this.inOrderTraversal(function (node, sequence, depth) {
+        node.sequence = sequence;
+        node.depth = depth;
+
+        if (!nodes[depth]) { nodes[depth] = []; }
+        nodes[depth].push(node);
+      });
+
       var spaces_per_node = 5;
 
-      _.each(nodes_by_depth, function (nodes_at_depth) {
+      Object.keys(nodes).forEach(function (depth) {
+        var nodes_at_depth = nodes[depth];
         var output = '';
         for (var i = 0; i < nodes_at_depth.length; i++) {
           var node = nodes_at_depth[i];
@@ -29,12 +35,6 @@ module.exports = function (opts) {
         }
         console.log(output + '\n');
       });
-    },
-
-    nodes: function () {
-      var all_nodes = [];
-      this.inOrderTraversal(function (node) { all_nodes.push(node); });
-      return all_nodes;
     },
 
     search: function (key, currentNode) {
@@ -77,13 +77,6 @@ module.exports = function (opts) {
       if (currentNode.right) {
         this.preOrderTraversal(callback, currentNode.right);
       }
-    },
-
-    updateNodePositionMetadata: function () {
-      this.inOrderTraversal(function (node, sequence, depth) {
-        node.sequence = sequence;
-        node.depth = depth;
-      });
     },
 
     inOrderTraversal: function (callback, currentNode, depth) {

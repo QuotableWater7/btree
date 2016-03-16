@@ -327,33 +327,3 @@ describe('#inOrderTraversal', function () {
     });
   });
 });
-
-describe('#updatePositionMetadata', function () {
-  var tree;
-  var nodes;
-
-  beforeEach(function () {
-    tree = new Tree();
-    nodes = [
-      new Node({ key: 12 }),
-      new Node({ key: 15 }),
-      new Node({ key: 18 }),
-      new Node({ key: 21 }),
-      new Node({ key: 24 }),
-    ];
-    nodes.forEach(function (node) {
-      tree.insert(node);
-    });
-  });
-
-  it('assigns sequence number on all nodes in left-to-right order', function () {
-    var currentSequence = 0;
-    tree.updateNodePositionMetadata();
-
-    expect(tree.root).to.eq(nodes[1]);
-
-    nodes.forEach(function (node) {
-      expect(node.sequence).to.eq(++currentSequence);
-    });
-  });
-});

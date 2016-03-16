@@ -4,10 +4,8 @@ var _ = require('underscore');
 var Node = require('./node');
 var spaces = require('./util/spaces');
 
-module.exports = function (root) {
+module.exports = function () {
   return {
-    root: root,
-
     print: function () {
       this.updateNodePositionMetadata();
       var nodes = this.nodes();

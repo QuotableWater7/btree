@@ -13,7 +13,8 @@ describe('#height', function () {
 
   it('returns 1 when there is only a root', function () {
     var root = new Node({ key: 10 });
-    var tree = new Tree(root);
+    var tree = new Tree();
+    tree.insert(root);
 
     expect(tree.height()).to.eq(1);
   });
@@ -22,7 +23,8 @@ describe('#height', function () {
     var root = new Node({ key: 10 });
     var leaf = new Node({ key: 15 });
     var leaf2 = new Node({ key: 8 });
-    var tree = new Tree(root);
+    var tree = new Tree();
+    tree.insert(root);
     tree.insert(leaf);
     tree.insert(leaf2);
 
@@ -33,7 +35,8 @@ describe('#height', function () {
     var root = new Node({ key: 10 });
     var leaf = new Node({ key: 15 });
     var leaf2 = new Node({ key: 8 });
-    var tree = new Tree(root);
+    var tree = new Tree();
+    tree.insert(root);
     tree.insert(leaf);
     tree.insert(leaf2);
 

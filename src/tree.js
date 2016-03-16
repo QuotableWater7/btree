@@ -2,12 +2,7 @@
 
 var _ = require('underscore');
 var Node = require('./node');
-
-function spaces(number) {
-  var spaces = '';
-  for (var i = 0; i < number; i++) { spaces += ' '; }
-  return spaces;
-}
+var spaces = require('./util/spaces');
 
 module.exports = function (root) {
   return {

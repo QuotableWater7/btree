@@ -20,6 +20,58 @@ describe('constructor', function () {
   });
 });
 
+describe.only('#delete', function () {
+  var tree;
+
+  beforeEach(function () {
+    tree = new Tree();
+    tree.bulkInsert(100, 50, 150, 175, 125);
+  });
+
+  it('can delete the root', function () {
+    tree.delete(tree.root.key);
+
+    expect(tree.root.key).to.eq(150);
+  });
+
+  it('can delete when node has parent and child', function () {
+    tree.delete(tree.root.right.key);
+
+    expect(tree.root.right.key).to.eq(125);
+    expect(tree.root.right.parent).to.eq(tree.root);
+  });
+
+  it('can delete when node has one child on left', function () {
+    tree = new Tree();
+    tree.bulkInsert(50, 25, 75, 12);
+    tree.delete(25);
+
+    expect(tree.root.left.key).to.eq(12);
+    expect(tree.root.left.parent).to.eq(tree.root);
+  });
+
+  it('can delete when node has one child on right', function () {
+    tree = new Tree();
+    tree.bulkInsert(50, 25, 75, 33);
+    tree.delete(25);
+
+    expect(tree.root.left.key).to.eq(33);
+    expect(tree.root.left.parent).to.eq(tree.root);
+  });
+
+  it('can delete when node is a leaf', function () {
+    tree.delete(tree.root.left.key);
+
+    expect(tree.root.left).to.eq(null);
+  });
+
+  it('throws error if node not found', function () {
+    function runner() { tree.delete(99); }
+
+    expect(runner).to.throw('Cannot delete non-existent node');
+  });
+});
+
 describe('#height', function () {
   it('returns 0 when there is no root', function () {
     expect(new Tree().height()).to.eq(0);

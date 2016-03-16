@@ -51,6 +51,37 @@ module.exports = function (opts) {
       }
     },
 
+    delete: function (key) {
+      var node = this.search(key);
+      if (!node) { throw new Error('Cannot delete non-existent node'); }
+
+      var parent = node.parent;
+      var right_child = node.right;
+      var left_child = node.left;
+
+      // case 1: node is a leaf
+      if (node.isLeaf()) {
+        if (parent) {
+          if (parent.right === node) {
+            parent.right = null;
+          } else {
+            parent.left = null;
+          }
+        }
+      } // case 2: node with one child
+      else if (node.hasOneChild()) {
+        var child = node.left || node.right;
+
+        if (node.isRightChildOfParent(parent)) {
+          parent.right = child;
+        } else if (node.isLeftChildOfParent(parent)) {
+          parent.left = child;
+        }
+
+        child.parent = parent;
+      }
+    },
+
     postOrderTraversal: function (callback, currentNode) {
       currentNode = arguments.length > 1 ? currentNode : this.root;
 

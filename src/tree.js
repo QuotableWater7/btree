@@ -56,17 +56,13 @@ module.exports = function (opts) {
       if (!node) { throw new Error('Cannot delete non-existent node'); }
 
       var parent = node.parent;
-      var right_child = node.right;
-      var left_child = node.left;
 
       // case 1: node is a leaf
       if (node.isLeaf()) {
-        if (parent) {
-          if (parent.right === node) {
-            parent.right = null;
-          } else {
-            parent.left = null;
-          }
+        if (node.isRightChildOfParent(parent)) {
+          parent.right = null;
+        } else if (node.isLeftChildOfParent(parent)) {
+          parent.left = null;
         }
       } // case 2: node with one child
       else if (node.hasOneChild()) {

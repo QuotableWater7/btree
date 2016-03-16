@@ -129,7 +129,9 @@ module.exports = function (root) {
 
       if (!this.root) {
         this.root = node;
-      } else if (node.value >= currentRoot.value) {
+      } else if (node.value === currentRoot.value) {
+        throw 'Duplicate key violation';
+      } else if (node.value > currentRoot.value) {
         if (currentRoot.right) {
           this.insert(node, currentRoot.right);
         } else {

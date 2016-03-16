@@ -41,7 +41,7 @@ describe('#height', function () {
   });
 });
 
-describe.only('#search', function () {
+describe('#search', function () {
   var tree;
 
   beforeEach(function () {
@@ -97,6 +97,13 @@ describe('#insert', function () {
     tree.insert(node);
 
     expect(tree.root).to.eq(node);
+  });
+
+  it('throws duplicate key violation when key is already present', function () {
+    var tree = new Tree();
+    tree.bulkInsert(4, 5, 6);
+
+    expect(function () { tree.bulkInsert(5); }).to.throw('Duplicate key violation');
   });
 
   it('inserts to correct subtree when root present', function () {

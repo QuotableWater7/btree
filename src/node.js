@@ -2,12 +2,12 @@
 
 module.exports = function (opts) {
   opts = opts || {};
-  if (typeof opts.value === 'undefined') {
+  if (typeof opts.key === 'undefined') {
     throw new Error('Must provide value for node');
   }
 
   return {
-    value: opts.value,
+    key: opts.key,
     left: opts.left,
     right: opts.right,
     parent: opts.parent,
@@ -30,7 +30,7 @@ module.exports = function (opts) {
 
     largestChild: function () {
       if (this.right && this.left) {
-        return this.right.value > this.left.value ? this.right : this.left;
+        return this.right.key > this.left.key ? this.right : this.left;
       }
 
       return typeof this.right !== 'undefined' ? this.right : this.left;

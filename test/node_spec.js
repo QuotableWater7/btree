@@ -8,9 +8,9 @@ var Node = BinaryTree.Node;
 describe('#constructor', function () {
 
   it('sets the attributes on the object', function () {
-    var node = new Node({ value: 5, parent: 'blah', left: 'left', right: 'right' });
+    var node = new Node({ key: 5, parent: 'blah', left: 'left', right: 'right' });
 
-    expect(node.value).to.eq(5);
+    expect(node.key).to.eq(5);
     expect(node.parent).to.eq('blah');
     expect(node.left).to.eq('left');
     expect(node.right).to.eq('right');
@@ -21,16 +21,16 @@ describe('#constructor', function () {
 describe('#setLeftChild', function () {
 
   it('updates the left child', function () {
-    var node = new Node({ value: 5 });
-    var left = new Node({ value: 10 });
+    var node = new Node({ key: 5 });
+    var left = new Node({ key: 10 });
 
     node.setLeftChild(left);
     expect(node.left).to.eq(left);
   });
 
   it('updates the left child\'s parent', function () {
-    var node = new Node({ value: 5 });
-    var left = new Node({ value: 10 });
+    var node = new Node({ key: 5 });
+    var left = new Node({ key: 10 });
 
     node.setLeftChild(left);
     expect(node.left.parent).to.eq(node);
@@ -41,16 +41,16 @@ describe('#setLeftChild', function () {
 describe('#setRightChild', function () {
 
   it('updates the right child', function () {
-    var node = new Node({ value: 5 });
-    var right = new Node({ value: 10 });
+    var node = new Node({ key: 5 });
+    var right = new Node({ key: 10 });
 
     node.setRightChild(right);
     expect(node.right).to.eq(right);
   });
 
   it('updates the right child\'s parent', function () {
-    var node = new Node({ value: 5 });
-    var right = new Node({ value: 10 });
+    var node = new Node({ key: 5 });
+    var right = new Node({ key: 10 });
 
     node.setRightChild(right);
     expect(node.right.parent).to.eq(node);
@@ -64,9 +64,9 @@ describe('#largestChild', function () {
   var root;
 
   beforeEach(function () {
-    left = new Node({ value: 50 });
-    right = new Node({ value: 100 });
-    root = new Node({ value: 10, left: left, right: right });
+    left = new Node({ key: 50 });
+    right = new Node({ key: 100 });
+    root = new Node({ key: 10, left: left, right: right });
   });
 
   it('returns largest child when both are present', function () {

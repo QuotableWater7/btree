@@ -12,9 +12,9 @@ var Tree = BinaryTree.Tree;
 var Node = BinaryTree.Node;
 
 var tree = new Tree();
-var node = new Node({ value: 10 });
+var node = new Node({ key: 10 });
 tree.insert(node);                     // node is now tree's root
-tree.insert(new Node({ value: 15 }));  // tree.root.right.value: 15
+tree.insert(new Node({ key: 15 }));  // tree.root.right.key: 15
 ```
 
 To print a text-view of the tree,

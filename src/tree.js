@@ -26,7 +26,7 @@ module.exports = function (root) {
           var prev_node = nodes_at_depth[i - 1];
           var prev_sequence = prev_node ? prev_node.sequence : 0;
           output += spaces((node.sequence - prev_sequence) * spaces_per_node - 1);
-          output += node.value;
+          output += node.key;
         }
         console.log(output + '\n');
       });
@@ -43,11 +43,11 @@ module.exports = function (root) {
 
       if (!currentNode) {
         return null;
-      } else if (currentNode.value === key) {
+      } else if (currentNode.key === key) {
         return currentNode;
-      } else if (key < currentNode.value) {
+      } else if (key < currentNode.key) {
         return this.search(key, currentNode.left);
-      } else if (key > currentNode.value) {
+      } else if (key > currentNode.key) {
         return this.search(key, currentNode.right);
       }
     },
@@ -116,7 +116,7 @@ module.exports = function (root) {
     bulkInsert: function () {
       var numbers = Array.prototype.slice.call(arguments);
       var nodes = numbers.map(function (number) {
-        return new Node({ value: number });
+        return new Node({ key: number });
       });
 
       nodes.forEach(function (node) {
@@ -129,16 +129,16 @@ module.exports = function (root) {
 
       if (!this.root) {
         this.root = node;
-      } else if (node.value === currentRoot.value) {
-        throw 'Duplicate key violation';
-      } else if (node.value > currentRoot.value) {
+      } else if (node.key === currentRoot.key) {
+        throw new Error('Duplicate key violation');
+      } else if (node.key > currentRoot.key) {
         if (currentRoot.right) {
           this.insert(node, currentRoot.right);
         } else {
           currentRoot.setRightChild(node);
           this.rebalance(currentRoot.parent);
         }
-      } else if (node.value < currentRoot.value) {
+      } else if (node.key < currentRoot.key) {
         if (currentRoot.left) {
           this.insert(node, currentRoot.left);
         } else {

@@ -6,6 +6,20 @@ var BinaryTree = require('../src/index');
 var Tree = BinaryTree.Tree;
 var Node = BinaryTree.Node;
 
+describe('constructor', function () {
+  it('can index based on the key passed in', function () {
+    var tree = new Tree({ key: 'value' });
+    var root = new Node({ key: 30, value: 50 });
+    var leaf = new Node({ key: 50, value: 30 });
+
+    tree.insert(root);
+    tree.insert(leaf);
+
+    expect(tree.search(root.value)).to.eq(root);
+    expect(tree.search(leaf.value)).to.eq(leaf);
+  });
+});
+
 describe('#height', function () {
   it('returns 0 when there is no root', function () {
     expect(new Tree().height()).to.eq(0);

@@ -4,9 +4,15 @@ var _ = require('underscore');
 var Node = require('./node');
 var spaces = require('./util/spaces');
 
-module.exports = function () {
+module.exports = function (opts) {
+  var opts = opts || {};
+
   return {
+    key: opts.key || 'key',
+
     print: function () {
+      var self = this;
+
       this.updateNodePositionMetadata();
       var nodes = this.nodes();
       var nodes_by_depth = _.groupBy(nodes, 'depth');
@@ -19,7 +25,7 @@ module.exports = function () {
           var prev_node = nodes_at_depth[i - 1];
           var prev_sequence = prev_node ? prev_node.sequence : 0;
           output += spaces((node.sequence - prev_sequence) * spaces_per_node - 1);
-          output += node.key;
+          output += node[self.key];
         }
         console.log(output + '\n');
       });
@@ -36,11 +42,11 @@ module.exports = function () {
 
       if (!currentNode) {
         return null;
-      } else if (currentNode.key === key) {
+      } else if (currentNode[this.key] === key) {
         return currentNode;
-      } else if (key < currentNode.key) {
+      } else if (key < currentNode[this.key]) {
         return this.search(key, currentNode.left);
-      } else if (key > currentNode.key) {
+      } else if (key > currentNode[this.key]) {
         return this.search(key, currentNode.right);
       }
     },
@@ -122,16 +128,17 @@ module.exports = function () {
 
       if (!this.root) {
         this.root = node;
-      } else if (node.key === currentRoot.key) {
+      } else if (node[this.key] === currentRoot[this.key]) {
+        console.log('new', node[this.key], 'existing', currentRoot[this.key]);
         throw new Error('Duplicate key violation');
-      } else if (node.key > currentRoot.key) {
+      } else if (node[this.key] > currentRoot[this.key]) {
         if (currentRoot.right) {
           this.insert(node, currentRoot.right);
         } else {
           currentRoot.setRightChild(node);
           this.rebalance(currentRoot.parent);
         }
-      } else if (node.key < currentRoot.key) {
+      } else if (node[this.key] < currentRoot[this.key]) {
         if (currentRoot.left) {
           this.insert(node, currentRoot.left);
         } else {
@@ -153,7 +160,7 @@ module.exports = function () {
       this.invert(node.right);
 
       var parent = node;
-      var child = node.largestChild();
+      var child = node.largestChild(this.key);
       this.swap(parent, child);
 
       if (child.isRoot()) { this.root = child; }

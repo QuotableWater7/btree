@@ -64,9 +64,9 @@ describe('#largestChild', function () {
   var root;
 
   beforeEach(function () {
-    left = new Node({ key: 50 });
-    right = new Node({ key: 100 });
-    root = new Node({ key: 10, left: left, right: right });
+    left = new Node({ id: 50, key: 100 });
+    right = new Node({ id: 100, key: 50 });
+    root = new Node({ id: 10, left: left, right: right });
   });
 
   it('returns largest child when both are present', function () {
@@ -88,5 +88,9 @@ describe('#largestChild', function () {
     delete root.left;
 
     expect(root.largestChild()).to.eq(root.right);
+  });
+
+  it('uses key passed in when present', function () {
+    expect(root.largestChild('key')).to.eq(root.left);
   });
 });

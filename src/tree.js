@@ -152,7 +152,9 @@ module.exports = function (root) {
       if (!node) { return; }
       if (this.height(node) === 1) { return; }
 
-      this.invert(node.left);
+      if (node.left) {
+        this.invert(node.left);
+      }
       this.invert(node.right);
 
       var parent = node;

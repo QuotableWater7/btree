@@ -55,11 +55,11 @@ module.exports = function (opts) {
       currentNode = arguments.length > 1 ? currentNode : this.root;
 
       if (currentNode.left) {
-        this.preOrderTraversal(callback, currentNode.left);
+        this.postOrderTraversal(callback, currentNode.left);
       }
 
       if (currentNode.right) {
-        this.preOrderTraversal(callback, currentNode.right);
+        this.postOrderTraversal(callback, currentNode.right);
       }
 
       callback(currentNode);

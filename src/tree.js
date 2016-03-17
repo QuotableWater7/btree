@@ -52,7 +52,7 @@ module.exports = function (opts) {
     },
 
     delete: function (key) {
-      var node = this.search(key);
+      var node = typeof key === "number" ? this.search(key) : key;
       if (!node) { throw new Error('Cannot delete non-existent node'); }
 
       var parent = node.parent;
@@ -64,6 +64,7 @@ module.exports = function (opts) {
         } else if (node.isLeftChildOfParent(parent)) {
           parent.left = null;
         }
+        this.rebalance(parent);
       } // case 2: node with one child
       else if (node.hasOneChild()) {
         var child = node.left || node.right;
@@ -75,9 +76,12 @@ module.exports = function (opts) {
         }
 
         child.parent = parent;
+        this.rebalance(parent);
       } // case 3: node has two children
       else {
-
+        var replacementNode = this.max(node.left) || this.min(node.right);
+        this.swap(node, replacementNode);
+        this.delete(node);
       }
     },
 
@@ -164,7 +168,6 @@ module.exports = function (opts) {
       if (!this.root) {
         this.root = node;
       } else if (node[this.key] === currentRoot[this.key]) {
-        console.log('new', node[this.key], 'existing', currentRoot[this.key]);
         throw new Error('Duplicate key violation');
       } else if (node[this.key] > currentRoot[this.key]) {
         if (currentRoot.right) {
@@ -246,6 +249,7 @@ module.exports = function (opts) {
 
     rebalance: function (node) {
       if (!node) { return; }
+
       var height_left = this.height(node.left);
       var height_right = this.height(node.right);
 

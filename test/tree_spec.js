@@ -59,10 +59,19 @@ describe('#delete', function () {
     expect(tree.root.left.parent).to.eq(tree.root);
   });
 
+  it('can delete when node has two children', function () {
+    tree.delete(150);
+
+    expect(tree.root.right.key).to.eq(125);
+    expect(tree.root.right.parent).to.eq(tree.root);
+    expect(tree.root.right.right.key).to.eq(175);
+    expect(tree.root.right.right.parent).to.eq(tree.root.right);
+  });
+
   it('can delete when node is a leaf', function () {
     tree.delete(tree.root.left.key);
-
-    expect(tree.root.left).to.eq(null);
+    // rebalancing results in 100 on left
+    expect(tree.root.left.key).to.eq(100);
   });
 
   it('throws error if node not found', function () {

@@ -75,7 +75,22 @@ module.exports = function (opts) {
         }
 
         child.parent = parent;
+      } // case 3: node has two children
+      else {
+
       }
+    },
+
+    min: function (currentNode) {
+      currentNode = arguments.length > 0 ? currentNode : this.root;
+
+      return currentNode.left ? this.min(currentNode.left) : currentNode;
+    },
+
+    max: function (currentNode) {
+      currentNode = arguments.length > 0 ? currentNode : this.root;
+
+      return currentNode.right ? this.max(currentNode.right) : currentNode;
     },
 
     postOrderTraversal: function (callback, currentNode) {

@@ -20,7 +20,7 @@ describe('constructor', function () {
   });
 });
 
-describe.only('#delete', function () {
+describe('#delete', function () {
   var tree;
 
   beforeEach(function () {
@@ -69,6 +69,38 @@ describe.only('#delete', function () {
     function runner() { tree.delete(99); }
 
     expect(runner).to.throw('Cannot delete non-existent node');
+  });
+});
+
+describe('#min', function () {
+  it('returns the root when it is the only element', function () {
+    var tree = new Tree();
+    tree.bulkInsert(9);
+
+    expect(tree.min().key).to.eq(9);
+  });
+
+  it('returns node with smallest key when tree has multiple levels', function () {
+    var tree = new Tree();
+    tree.bulkInsert(9, 10, 3, 5, 0, 4, 2, 7);
+
+    expect(tree.min().key).to.eq(0);
+  });
+});
+
+describe('#max', function () {
+  it('returns the root when it is the only element', function () {
+    var tree = new Tree();
+    tree.bulkInsert(9);
+
+    expect(tree.max().key).to.eq(9);
+  });
+
+  it('returns node with smallest key when tree has multiple levels', function () {
+    var tree = new Tree();
+    tree.bulkInsert(9, 10, 3, 5, 0, 4, 2, 7);
+
+    expect(tree.max().key).to.eq(10);
   });
 });
 

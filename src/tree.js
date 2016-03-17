@@ -37,6 +37,10 @@ module.exports = function (opts) {
       });
     },
 
+    isEmpty: function () {
+      return this.height() === 0;
+    },
+
     search: function (key, currentNode) {
       var currentNode = arguments.length > 1 ? currentNode : this.root;
 
@@ -56,6 +60,8 @@ module.exports = function (opts) {
       if (!node) { throw new Error('Cannot delete non-existent node'); }
 
       var parent = node.parent;
+
+      if (node.isRoot()) { this.root = null; }
 
       // case 1: node is a leaf
       if (node.isLeaf()) {

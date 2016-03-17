@@ -20,6 +20,23 @@ describe('constructor', function () {
   });
 });
 
+describe('#isEmpty', function () {
+  it('returns true when no nodes have been inserted', function () {
+    var tree = new Tree();
+    expect(tree.isEmpty()).to.eq(true);
+  });
+
+  it('returns false when nodes have been inserted', function () {
+    var tree = new Tree();
+    tree.insert(new Node({ key: 10, value: 'plop' }));
+
+    expect(tree.isEmpty()).to.eq(false);
+
+    tree.delete(10);
+    expect(tree.isEmpty()).to.eq(true);
+  });
+});
+
 describe('#delete', function () {
   var tree;
 

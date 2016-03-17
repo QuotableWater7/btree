@@ -85,7 +85,7 @@ module.exports = function (opts) {
         this.rebalance(parent);
       } // case 3: node has two children
       else {
-        var replacementNode = this.max(node.left) || this.min(node.right);
+        var replacementNode = this.max(node.left);
         this.swap(node, replacementNode);
         this.delete(node);
       }

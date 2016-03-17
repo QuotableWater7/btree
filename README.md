@@ -6,7 +6,7 @@ To install / use:
 npm install btree-js
 ```
 
-### Basic Usage
+#### Basic Usage
 ```javascript
 var BinaryTree = require('btree-js');
 var Tree = BinaryTree.Tree;
@@ -17,9 +17,7 @@ tree.insert(new Node({ key: 10, text: 'blah' }));  // becomes tree's root
 tree.insert(new Node({ key: 15, text: 'plop' }));  // tree.root.right.key: 15
 ```
 
-### API
----
-
+## API
 #### isEmpty
 Returns whether or not the tree has nodes in it.
 ```javascript
@@ -79,6 +77,9 @@ console.log(tree.max().key); // 90
 #### search
 Returns a node with the given key, if found.  Otherwise, returns `null`.
 ```javascript
+tree.insert(new Node({ key: 10, text: 'blah' }));
+tree.insert(new Node({ key: 15, text: 'plop' }));
+
 var node = tree.search(15);
 console.log(node.text);       // plop
 console.log(node.parent.key); // 10
@@ -96,6 +97,7 @@ tree.height();  // 3
 #### invert
 Inverts the tree by taking all the node pointers and flipping them.
 
+```javascript
 tree.bulkInsert(50, 25, 75, 60, 90);
 tree.print();
 
@@ -113,6 +115,7 @@ tree.print();
     25              50
 
               60         75
+```
 
 #### print
 To print a text-view of the tree,

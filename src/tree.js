@@ -192,7 +192,6 @@ module.exports = function (opts) {
       }
     },
 
-    // make the max value be at root
     invert: function (node) {
       var node = arguments.length > 0 ? node : this.root;
       if (!node) { return; }

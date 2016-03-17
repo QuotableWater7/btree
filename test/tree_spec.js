@@ -362,6 +362,17 @@ describe('#swap', function () {
     expect(tree.root.left.key).to.eq(80);
     expect(tree.root.left.parent).to.eq(tree.root);
   });
+
+  it('can swap any two nodes (not just parent/child)', function () {
+    tree.bulkInsert(12,  33);
+    // swap siblings
+    tree.swap(tree.root.left.left, tree.root.left.right);
+
+    expect(tree.root.left.left.key).to.eq(33);
+    expect(tree.root.left.left.parent.key).to.eq(25);
+    expect(tree.root.left.right.key).to.eq(12);
+    expect(tree.root.left.right.parent.key).to.eq(25);
+  });
 });
 
 describe('#invert', function () {

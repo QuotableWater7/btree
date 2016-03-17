@@ -201,37 +201,47 @@ module.exports = function (opts) {
       if (child.isRoot()) { this.root = child; }
     },
 
-    swap: function (parent, child) {
-      var child_right = child.right;
-      var child_left = child.left;
-      var parent_parent = parent.parent;
+    swap: function (n1, n2) {
+      var n1parent = n1.parent;
+      var n1left = n1.left;
+      var n1right = n1.right;
 
-      if (parent.right === child) {
-        var parent_left = parent.left
+      var n2parent = n2.parent;
+      var n2left = n2.left;
+      var n2right = n2.right;
 
-        child.right = parent;
-        child.left = parent_left;
-      } else {
-        var parent_right = parent.right;
-
-        child.left = parent;
-        child.right = parent_right;
-      }
-
-      if (parent_parent) {
-        if (parent_parent.right === parent) {
-          parent_parent.right = child;
+      // connect nodes surrounding n1 and n2 to new nodes
+      if (n1parent) {
+        if (n1parent.right === n1) {
+          n1parent.right = n2;
         } else {
-          parent_parent.left = child;
+          n1parent.left = n2;
         }
       }
+      if (n1left) { n1left.parent = n2; }
+      if (n1right) { n1right.parent = n2; }
 
-      parent.parent = child;
-      parent.right = child_right;
-      parent.left = child_left;
-      child.parent = parent_parent;
+      if (n2parent) {
+        if (n2parent.right === n2) {
+          n2parent.right = n1;
+        } else {
+          n2parent.left = n1;
+        }
+      }
+      if (n2left) { n2left.parent = n1; }
+      if (n2right) { n2right.parent = n1; }
 
-      if (child.isRoot()) { this.root = child; }
+      // now connect n1 and n2 to their correct surroundings
+      n2.parent = n1parent !== n2 ? n1parent : n1;
+      n2.right = n1right !== n2 ? n1right : n1;
+      n2.left = n1left !== n2 ? n1left : n1;
+
+      n1.parent = n2parent !== n1 ? n2parent : n2;
+      n1.right = n2right !== n1 ? n2right : n2;
+      n1.left = n2left !== n1 ? n2left : n2;
+
+      if (n1.isRoot()) { this.root = n1; }
+      else if (n2.isRoot()) { this.root = n2; }
     },
 
     rebalance: function (node) {

@@ -51,11 +51,18 @@ describe('#delete', function () {
     expect(tree.root.key).to.eq(150);
   });
 
-  it('can delete when node has parent and child', function () {
-    tree.delete(tree.root.right.key);
+  it('can delete the root when many elements in tree', function () {
+    tree = new Tree();
+    tree.bulkInsert(
+      1, 3, 5, 2, 4, 6, 7, 8, 9, 15, 11, 13, 17, 18, 14, 19, 25, 30, 22, 21, 10, 16
+    );
+    tree.print();
+    tree.delete(tree.root);
+    tree.delete(tree.root);
+    tree.delete(tree.root);
+    tree.print();
 
-    expect(tree.root.right.key).to.eq(125);
-    expect(tree.root.right.parent).to.eq(tree.root);
+    expect(tree.root.key).to.eq(9);
   });
 
   it('can delete when node has one child on left', function () {
@@ -247,6 +254,13 @@ describe('#insert', function () {
     tree.insert(node3);
 
     expect(tree.root.left).to.eq(node3);
+  });
+
+  it('sets the correct parent on the inserted node', function () {
+    var tree = new Tree();
+    tree.bulkInsert(10, 5, 15, 2, 8);
+
+    expect(tree.search(2).parent).to.eq(tree.search(5));
   });
 
   it('rebalances tree to left when right side gets too long', function () {

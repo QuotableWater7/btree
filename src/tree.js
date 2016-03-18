@@ -299,6 +299,7 @@ module.exports = function (opts) {
 
       node.parent = child;
       node.right = child_left_child;
+      if (child_left_child) { child_left_child.parent = node; }
 
       if (!parent) { this.root = child; }
     },
@@ -320,6 +321,7 @@ module.exports = function (opts) {
 
       node.parent = child;
       node.left = child_right_child;
+      if (child_right_child) { child_right_child.parent = node; }
 
       if (!parent) { this.root = child; }
     },

@@ -315,10 +315,15 @@ describe('#insert', function () {
 
     expect(tree.root.key).to.eq(4);
     expect(tree.root.left.key).to.eq(2);
+    expect(tree.root.left.parent).to.eq(tree.root);
     expect(tree.root.left.left.key).to.eq(1);
+    expect(tree.root.left.left.parent).to.eq(tree.root.left);
     expect(tree.root.left.right.key).to.eq(3);
+    expect(tree.root.left.right.parent).to.eq(tree.root.left);
     expect(tree.root.right.key).to.eq(5);
+    expect(tree.root.right.parent).to.eq(tree.root);
     expect(tree.root.right.right.key).to.eq(6);
+    expect(tree.root.right.right.parent).to.eq(tree.root.right);
   });
 
   it('rebalances tree to right when left side gets too long', function () {
@@ -357,10 +362,15 @@ describe('#insert', function () {
 
     expect(tree.root.key).to.eq(3);
     expect(tree.root.left.key).to.eq(2);
+    expect(tree.root.left.parent).to.eq(tree.root);
     expect(tree.root.left.left.key).to.eq(1);
+    expect(tree.root.left.left.parent).to.eq(tree.root.left);
     expect(tree.root.right.key).to.eq(5);
+    expect(tree.root.right.parent).to.eq(tree.root);
     expect(tree.root.right.left.key).to.eq(4);
+    expect(tree.root.right.left.parent).to.eq(tree.root.right);
     expect(tree.root.right.right.key).to.eq(6);
+    expect(tree.root.right.right.parent).to.eq(tree.root.right);
   });
 
 });

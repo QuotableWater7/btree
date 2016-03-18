@@ -105,6 +105,22 @@ describe('#delete', function () {
   });
 });
 
+describe('#deleteAll', function () {
+  var tree;
+
+  beforeEach(function () {
+    tree = new Tree();
+    tree.bulkInsert(1, 2, 3, 4, 5, 6, 7, 8, 9);
+  });
+
+  it('removes all nodes including the root', function () {
+    tree.deleteAll();
+
+    expect(tree.height()).to.eq(0);
+    expect(tree.isEmpty()).to.eq(true);
+  });
+});
+
 describe('#min', function () {
   it('returns the root when it is the only element', function () {
     var tree = new Tree();

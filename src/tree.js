@@ -55,6 +55,14 @@ module.exports = function (opts) {
       }
     },
 
+    deleteAll: function () {
+      var min;
+      while (min = this.min()) {
+        this.delete(min);
+        if (!this.root) { break; }
+      }
+    },
+
     delete: function (key) {
       var node = typeof key === "number" ? this.search(key) : key;
       if (!node) { throw new Error('Cannot delete non-existent node'); }

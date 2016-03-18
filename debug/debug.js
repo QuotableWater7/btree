@@ -5,5 +5,7 @@ var Tree = BTree.Tree;
 var Node = BTree.Node;
 
 var tree = new Tree();
-tree.bulkInsert(100, 50, 150, 175, 125);
+tree.bulkInsert(1, 2, 3, 4, 5, 6, 7, 8, 9);
+tree.print();
+tree.deleteAll();
 debugger;

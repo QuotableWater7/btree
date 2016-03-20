@@ -56,11 +56,7 @@ module.exports = function (opts) {
     },
 
     deleteAll: function () {
-      var min;
-      while (min = this.min()) {
-        this.delete(min);
-        if (!this.root) { break; }
-      }
+      this.root = null;
     },
 
     delete: function (key) {

@@ -22,8 +22,9 @@ module.exports = function (opts) {
       });
 
       var spaces_per_node = 5;
+      var node_depths = Object.keys(nodes);
 
-      Object.keys(nodes).forEach(function (depth) {
+      node_depths.forEach(function (depth) {
         var nodes_at_depth = nodes[depth];
         var output = '';
         for (var i = 0; i < nodes_at_depth.length; i++) {

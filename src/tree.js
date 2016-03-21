@@ -172,23 +172,27 @@ module.exports = function (opts) {
       }.bind(this));
     },
 
-    insert: function (node, currentRoot) {
-      var currentRoot = arguments.length > 1 ? currentRoot : this.root;
-
+    insert: function (node) {
       if (!this.root) {
         this.root = node;
-      } else if (node[this.key] === currentRoot[this.key]) {
+      } else {
+        this._insert(node, this.root);
+      }
+    },
+
+    _insert: function (node, currentRoot) {
+      if (node[this.key] === currentRoot[this.key]) {
         throw new Error('Duplicate key violation');
       } else if (node[this.key] > currentRoot[this.key]) {
         if (currentRoot.right) {
-          this.insert(node, currentRoot.right);
+          this._insert(node, currentRoot.right);
         } else {
           currentRoot.setRightChild(node);
           this.rebalance(currentRoot.parent);
         }
       } else if (node[this.key] < currentRoot[this.key]) {
         if (currentRoot.left) {
-          this.insert(node, currentRoot.left);
+          this._insert(node, currentRoot.left);
         } else {
           currentRoot.setLeftChild(node);
           this.rebalance(currentRoot.parent);

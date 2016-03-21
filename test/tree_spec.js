@@ -430,11 +430,13 @@ describe('#swap', function () {
     expect(tree.root.key).to.eq(80);
     expect(tree.root.right.key).to.eq(50);
     expect(tree.root.right.parent).to.eq(tree.root);
+    expect(tree.root.left.parent).to.eq(tree.root);
 
-    tree.swap(tree.root, tree.root.left);
+    tree.swap(tree.root.left, tree.root);
     expect(tree.root.key).to.eq(25);
     expect(tree.root.left.key).to.eq(80);
     expect(tree.root.left.parent).to.eq(tree.root);
+    expect(tree.root.right.parent).to.eq(tree.root);
   });
 
   it('can swap any two nodes (not just parent/child)', function () {

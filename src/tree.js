@@ -42,17 +42,19 @@ module.exports = function (opts) {
       return this.height() === 0;
     },
 
-    search: function (key, currentNode) {
-      var currentNode = arguments.length > 1 ? currentNode : this.root;
+    search: function (key) {
+      return this._search(key, this.root);
+    },
 
+    _search: function (key, currentNode) {
       if (!currentNode) {
         return null;
       } else if (currentNode[this.key] === key) {
         return currentNode;
       } else if (key < currentNode[this.key]) {
-        return this.search(key, currentNode.left);
+        return this._search(key, currentNode.left);
       } else if (key > currentNode[this.key]) {
-        return this.search(key, currentNode.right);
+        return this._search(key, currentNode.right);
       }
     },
 

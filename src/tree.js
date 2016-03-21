@@ -60,9 +60,13 @@ module.exports = function (opts) {
     },
 
     delete: function (key) {
-      var node = typeof key === "number" ? this.search(key) : key;
+      var node = typeof key === 'number' ? this.search(key) : key;
       if (!node) { throw new Error('Cannot delete non-existent node'); }
 
+      this._delete(node);
+    },
+
+    _delete: function (node) {
       var parent = node.parent;
 
       if (node.isRoot()) { this.root = null; }
@@ -91,7 +95,7 @@ module.exports = function (opts) {
       else {
         var replacementNode = this.max(node.left);
         this.swap(node, replacementNode);
-        this.delete(node);
+        this._delete(node);
       }
     },
 

@@ -401,6 +401,14 @@ describe('#swap', function () {
     expect(tree.root.right.key).to.eq(50);
   });
 
+  it('swaps two elements when first is child and second is parent', function () {
+    tree.swap(root.right, root);
+
+    expect(tree.root.key).to.eq(75);
+    expect(tree.root.left.key).to.eq(25);
+    expect(tree.root.right.key).to.eq(50);
+  });
+
   it('correctly updates the parents on the swapped elements', function () {
     tree.swap(tree.root, tree.root.right);
     expect(tree.root.right.parent).to.eq(tree.root);

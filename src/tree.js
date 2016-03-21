@@ -95,8 +95,8 @@ module.exports = function (opts) {
       }
     },
 
-    min: function () {
-      return this.root ? this._min(this.root) : null;
+    min: function (currentNode) {
+      return this._min(currentNode || this.root);
     },
 
     _min: function (currentNode) {
@@ -104,9 +104,11 @@ module.exports = function (opts) {
     },
 
     max: function (currentNode) {
-      currentNode = arguments.length > 0 ? currentNode : this.root;
+      return this._max(currentNode || this.root);
+    },
 
-      return currentNode.right ? this.max(currentNode.right) : currentNode;
+    _max: function (currentNode) {
+      return currentNode.right ? this._max(currentNode.right) : currentNode;
     },
 
     postOrderTraversal: function (callback, currentNode) {

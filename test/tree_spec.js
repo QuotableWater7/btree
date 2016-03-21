@@ -240,9 +240,23 @@ describe('bulk insert', function () {
 });
 
 describe('#insert', function () {
+  it('can accept a number', function () {
+    var tree = new Tree();
+    tree.insert(5);
+
+    expect(tree.root.key).to.eq(5);
+  });
+
+  it('can accept a number when there is custom key', function () {
+    var tree = new Tree({ key: 'index' });
+    tree.insert(5);
+
+    expect(tree.root.index).to.eq(5);
+  });
+
   it('inserts to root when there is no root', function () {
-    var tree = new BinaryTree.Tree();
-    var node = new BinaryTree.Node({ key: 10 });
+    var tree = new Tree();
+    var node = new Node({ key: 10 });
 
     tree.insert(node);
 

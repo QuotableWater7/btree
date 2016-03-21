@@ -172,16 +172,19 @@ module.exports = function (opts) {
 
     bulkInsert: function () {
       var numbers = Array.prototype.slice.call(arguments);
-      var nodes = numbers.map(function (number) {
-        return new Node({ key: number });
-      });
 
-      nodes.forEach(function (node) {
-        this.insert(node);
+      numbers.forEach(function (number) {
+        this.insert(number);
       }.bind(this));
     },
 
     insert: function (node) {
+      if (typeof node === 'number') {
+        var data = {};
+        data[this.key] = node;
+        node = new Node(data);
+      }
+
       if (!this.root) {
         this.root = node;
       } else {

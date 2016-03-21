@@ -95,10 +95,12 @@ module.exports = function (opts) {
       }
     },
 
-    min: function (currentNode) {
-      currentNode = arguments.length > 0 ? currentNode : this.root;
+    min: function () {
+      return this.root ? this._min(this.root) : null;
+    },
 
-      return currentNode.left ? this.min(currentNode.left) : currentNode;
+    _min: function (currentNode) {
+      return currentNode.left ? this._min(currentNode.left) : currentNode;
     },
 
     max: function (currentNode) {

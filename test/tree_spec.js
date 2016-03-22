@@ -61,6 +61,30 @@ describe('#next', function () {
   });
 });
 
+describe('#prev', function () {
+  it('returns the prev node in the tree', function () {
+    var tree = new Tree();
+    tree.bulkInsert(6, 7, 8, 1, 2, 3, 4, 5);
+
+    for (var i = 2; i <= 8; i++) {
+      expect(tree.prev(tree.search(i))).to.eq(tree.search(i - 1));
+    }
+  });
+
+  it('returns null if no node passed in', function () {
+    var tree = new Tree();
+
+    expect(tree.prev(null)).to.eq(null);
+  });
+
+  it('returns null if no prev element', function () {
+    var tree = new Tree();
+    tree.insert(5);
+
+    expect(tree.prev(tree.search(5))).to.eq(null);
+  });
+});
+
 describe('#delete', function () {
   var tree;
 

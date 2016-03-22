@@ -66,6 +66,26 @@ module.exports = function (opts) {
       }
     },
 
+    prev: function (node) {
+      if (!node) { return null; }
+
+      if (node.left) {
+        return this.max(node.left);
+      } else {
+        var parent = node.parent;
+
+        while (parent) {
+          if (parent.right === node) {
+            return parent;
+          }
+          node = parent;
+          parent = parent.parent;
+        }
+
+        return null;
+      }
+    },
+
     _search: function (key, currentNode) {
       if (!currentNode) {
         return null;

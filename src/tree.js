@@ -46,6 +46,26 @@ module.exports = function (opts) {
       return this._search(key, this.root);
     },
 
+    next: function (node) {
+      if (!node) { return null; }
+
+      if (node.right) {
+        return this.min(node.right);
+      } else {
+        var parent = node.parent;
+
+        while (parent) {
+          if (parent.left === node) {
+            return parent;
+          }
+          node = parent;
+          parent = parent.parent;
+        }
+
+        return null;
+      }
+    },
+
     _search: function (key, currentNode) {
       if (!currentNode) {
         return null;

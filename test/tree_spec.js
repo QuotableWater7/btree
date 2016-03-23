@@ -309,11 +309,18 @@ describe('#insert', function () {
     expect(tree.root).to.eq(node);
   });
 
-  it('throws duplicate key violation when key is already present', function () {
-    var tree = new Tree();
+  it('throws error when key present and unique: true', function () {
+    var tree = new Tree({ unique: true });
     tree.bulkInsert(4, 5, 6);
 
     expect(function () { tree.bulkInsert(5); }).to.throw('Duplicate key violation');
+  });
+
+  it('does not throw error when key present and unique: false', function () {
+    var tree = new Tree();
+    tree.bulkInsert(4, 5, 6);
+
+    expect(function () { tree.bulkInsert(5); }).not.to.throw();
   });
 
   it('inserts to correct subtree when root present', function () {

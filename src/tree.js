@@ -9,6 +9,8 @@ module.exports = function (opts) {
   return {
     key: opts.key || 'key',
 
+    unique: opts.unique || false,
+
     print: function () {
       var self = this;
 
@@ -237,7 +239,7 @@ module.exports = function (opts) {
     },
 
     _insert: function (node, currentRoot) {
-      if (node[this.key] === currentRoot[this.key]) {
+      if (node[this.key] === currentRoot[this.key] && this.unique) {
         throw new Error('Duplicate key violation');
       } else if (node[this.key] > currentRoot[this.key]) {
         if (currentRoot.right) {

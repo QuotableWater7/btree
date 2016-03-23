@@ -31,7 +31,9 @@ module.exports = function (opts) {
           var node = nodes_at_depth[i];
           var prev_node = nodes_at_depth[i - 1];
           var prev_sequence = prev_node ? prev_node.sequence : 0;
-          output += spaces((node.sequence - prev_sequence) * spaces_per_node - 1);
+          // console.log(node.sequence, i);
+          var sequence_diff = node.sequence - prev_sequence;
+          output += spaces(sequence_diff * spaces_per_node + (sequence_diff - 1));
           output += node[self.key];
         }
         console.log(output + '\n');

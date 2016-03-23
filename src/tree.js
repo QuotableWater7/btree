@@ -42,6 +42,38 @@ module.exports = function (opts) {
       });
     },
 
+    printPaths: function () {
+      var key = this.key;
+      var paths = [];
+      this.findPaths(this.root, [], paths);
+
+      paths.forEach(function (path) {
+        var keys = path.map(function (node) { return node[key] });
+        console.log(keys.join(' '));
+      });
+    },
+
+    findPaths: function () {
+      var result = [];
+      this._findPaths(this.root, [], result);
+
+      return result;
+    },
+
+    _findPaths: function (currentNode, currentPath, paths) {
+      if (!currentNode) { return; }
+
+      var newPath = currentPath.slice(0);
+      newPath.push(currentNode);
+
+      if (currentNode.isLeaf()) {
+        paths.push(newPath);
+      } else {
+        this._findPaths(currentNode.left, newPath, paths);
+        this._findPaths(currentNode.right, newPath, paths);
+      }
+    },
+
     isEmpty: function () {
       return this.height() === 0;
     },

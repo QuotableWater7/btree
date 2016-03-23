@@ -37,6 +37,34 @@ describe('#isEmpty', function () {
   });
 });
 
+describe('#findPaths', function () {
+  it('returns all the paths from root to leaf', function () {
+    var tree = new Tree();
+    tree.bulkInsert(1, 2, 3, 4, 5, 6, 7, 8, 9);
+
+    var paths = tree.findPaths();
+    expect(paths.length).to.eq(5);
+
+    var expected_paths = [
+      [4, 2, 1],
+      [4, 2, 3],
+      [4, 6, 5],
+      [4, 6, 8, 7],
+      [4, 6, 8, 9]
+    ];
+
+    var path_index = 0;
+    paths.forEach(function (path) {
+      var node_index = 0;
+      path.forEach(function (node) {
+        expect(expected_paths[path_index][node_index++]).to.eq(node.key);
+      });
+
+      path_index++;
+    });
+  });
+});
+
 describe('#next', function () {
   it('returns the next node in the tree', function () {
     var tree = new Tree();

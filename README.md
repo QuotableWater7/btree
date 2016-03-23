@@ -1,5 +1,5 @@
 # btree
-A dependency-free rebalancing binary tree for JS
+A rebalancing binary tree for JS
 
 To install / use:
 ```javascript

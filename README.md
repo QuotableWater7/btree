@@ -17,7 +17,25 @@ tree.insert(new Node({ key: 10, text: 'blah' }));  // becomes tree's root
 tree.insert(new Node({ key: 15, text: 'plop' }));  // tree.root.right.key: 15
 ```
 
-## API
+### Options
+##### key
+The binary tree defaults to *key* property unless a key is explicitly passed in.
+
+```
+var tree = new Tree({ key: 'id' });
+tree.insert(1);
+console.log(tree.root.id); // 1
+```
+
+##### unique
+The binary tree defaults to allowing multiple identical keys.  If `unique: true` is passed in as an option, it will throw an error when inserting a duplicate key.
+
+```
+var tree = new Tree({ unique: true });
+tree.bulkInsert(1, 1);  // throws duplicate key violation
+```
+
+### API
 #### isEmpty
 Returns whether or not the tree has nodes in it.
 ```javascript

@@ -44,8 +44,7 @@ module.exports = function (opts) {
 
     printPaths: function () {
       var key = this.key;
-      var paths = [];
-      this.findPaths(this.root, [], paths);
+      var paths = this.findPaths();
 
       paths.forEach(function (path) {
         var keys = path.map(function (node) { return node[key] });

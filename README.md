@@ -103,6 +103,21 @@ console.log(node.text);       // plop
 console.log(node.parent.key); // 10
 ```
 
+#### findPaths
+Returns a list of paths from the root to the leaf (array of array of nodes).
+
+```
+tree.bulkInsert(2, 1, 3);
+var paths = tree.findPaths();
+paths.forEach(function path) {
+  var keys = path.map(function (node) { return node.key; });
+  console.log(keys.join(' '));
+});
+
+// 2 1
+// 2 3
+```
+
 #### height
 Returns the height of the tree.  With `n` nodes, the height of the
 tree will be approximately `log(n)`.

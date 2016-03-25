@@ -70,27 +70,24 @@ describe('#largestChild', function () {
   });
 
   it('returns largest child when both are present', function () {
-    expect(root.largestChild()).to.eq(root.right);
+    expect(root.largestChild('id')).to.eq(root.right);
 
     root.left = right;
     root.right = left;
 
-    expect(root.largestChild()).to.eq(root.left);
+    expect(root.largestChild('id')).to.eq(root.left);
+    expect(root.largestChild('key')).to.eq(root.right);
   });
 
   it('returns left child if it is present and right child is not', function () {
     delete root.right;
 
-    expect(root.largestChild()).to.eq(root.left);
+    expect(root.largestChild('key')).to.eq(root.left);
   });
 
   it('returns right child if it is present and left child is not', function () {
     delete root.left;
 
-    expect(root.largestChild()).to.eq(root.right);
-  });
-
-  it('uses key passed in when present', function () {
-    expect(root.largestChild('key')).to.eq(root.left);
+    expect(root.largestChild('key')).to.eq(root.right);
   });
 });

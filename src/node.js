@@ -40,7 +40,6 @@ module.exports = function (opts) {
     },
 
     largestChild: function (key) {
-      var key = key || 'id';
       if (this.right && this.left) {
         return this.right[key] > this.left[key] ? this.right : this.left;
       }

@@ -2,7 +2,7 @@
 A rebalancing binary tree for JS
 
 To install / use:
-```javascript
+```shell
 npm install btree-js
 ```
 
@@ -21,7 +21,7 @@ tree.insert(new Node({ key: 15, text: 'plop' }));  // tree.root.right.key: 15
 ##### key
 The binary tree defaults to *key* property unless a key is explicitly passed in.
 
-```
+```javascript
 var tree = new Tree({ key: 'id' });
 tree.insert(1);
 console.log(tree.root.id); // 1
@@ -30,7 +30,7 @@ console.log(tree.root.id); // 1
 ##### unique
 The binary tree defaults to allowing multiple identical keys.  If `unique: true` is passed in as an option, it will throw an error when inserting a duplicate key.
 
-```
+```javascript
 var tree = new Tree({ unique: true });
 tree.bulkInsert(1, 1);  // throws duplicate key violation
 ```
@@ -106,7 +106,7 @@ console.log(node.parent.key); // 10
 #### findPaths
 Returns a list of paths from the root to the leaf (array of array of nodes).
 
-```
+```javascript
 tree.bulkInsert(2, 1, 3);
 var paths = tree.findPaths();
 paths.forEach(function path) {

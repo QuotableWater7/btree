@@ -10,7 +10,7 @@ describe('#constructor', function () {
   it('sets the attributes on the object', function () {
     var node = new Node({ key: 5, parent: 'blah', left: 'left', right: 'right' });
 
-    expect(node.key).to.eq(5);
+    expect(node.data.key).to.eq(5);
     expect(node.parent).to.eq('blah');
     expect(node.left).to.eq('left');
     expect(node.right).to.eq('right');

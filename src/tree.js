@@ -36,7 +36,7 @@ module.exports = function (opts) {
           // console.log(node.sequence, i);
           var sequence_diff = node.sequence - prev_sequence;
           output += spaces(sequence_diff * spaces_per_node + (sequence_diff - 1));
-          output += node[self.key];
+          output += node.data[self.key];
         }
         console.log(output + '\n');
       });
@@ -124,11 +124,11 @@ module.exports = function (opts) {
     _search: function (key, currentNode) {
       if (!currentNode) {
         return null;
-      } else if (currentNode[this.key] === key) {
+      } else if (currentNode.data[this.key] === key) {
         return currentNode;
-      } else if (key < currentNode[this.key]) {
+      } else if (key < currentNode.data[this.key]) {
         return this._search(key, currentNode.left);
-      } else if (key > currentNode[this.key]) {
+      } else if (key > currentNode.data[this.key]) {
         return this._search(key, currentNode.right);
       }
     },
@@ -270,16 +270,16 @@ module.exports = function (opts) {
     },
 
     _insert: function (node, currentRoot) {
-      if (node[this.key] === currentRoot[this.key] && this.unique) {
+      if (node.data[this.key] === currentRoot.data[this.key] && this.unique) {
         throw new Error('Duplicate key violation');
-      } else if (node[this.key] > currentRoot[this.key]) {
+      } else if (node.data[this.key] > currentRoot.data[this.key]) {
         if (currentRoot.right) {
           this._insert(node, currentRoot.right);
         } else {
           currentRoot.setRightChild(node);
           this.rebalance(currentRoot.parent);
         }
-      } else if (node[this.key] < currentRoot[this.key]) {
+      } else if (node.data[this.key] < currentRoot.data[this.key]) {
         if (currentRoot.left) {
           this._insert(node, currentRoot.left);
         } else {

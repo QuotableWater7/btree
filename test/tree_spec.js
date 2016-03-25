@@ -15,8 +15,8 @@ describe('constructor', function () {
     tree.insert(root);
     tree.insert(leaf);
 
-    expect(tree.search(root.value)).to.eq(root);
-    expect(tree.search(leaf.value)).to.eq(leaf);
+    expect(tree.search(root.data.value)).to.eq(root);
+    expect(tree.search(leaf.data.value)).to.eq(leaf);
   });
 });
 
@@ -57,7 +57,7 @@ describe('#findPaths', function () {
     paths.forEach(function (path) {
       var node_index = 0;
       path.forEach(function (node) {
-        expect(expected_paths[path_index][node_index++]).to.eq(node.key);
+        expect(expected_paths[path_index][node_index++]).to.eq(node.data.key);
       });
 
       path_index++;
@@ -122,9 +122,9 @@ describe('#delete', function () {
   });
 
   it('can delete the root', function () {
-    tree.delete(tree.root.key);
+    tree.delete(tree.root.data.key);
 
-    expect(tree.root.key).to.eq(150);
+    expect(tree.root.data.key).to.eq(150);
   });
 
   it('can delete the root when many elements in tree', function () {
@@ -136,7 +136,7 @@ describe('#delete', function () {
     tree.delete(tree.root);
     tree.delete(tree.root);
 
-    expect(tree.root.key).to.eq(9);
+    expect(tree.root.data.key).to.eq(9);
   });
 
   it('can delete when node has one child on left', function () {
@@ -144,7 +144,7 @@ describe('#delete', function () {
     tree.bulkInsert(50, 25, 75, 12);
     tree.delete(25);
 
-    expect(tree.root.left.key).to.eq(12);
+    expect(tree.root.left.data.key).to.eq(12);
     expect(tree.root.left.parent).to.eq(tree.root);
   });
 
@@ -153,23 +153,23 @@ describe('#delete', function () {
     tree.bulkInsert(50, 25, 75, 33);
     tree.delete(25);
 
-    expect(tree.root.left.key).to.eq(33);
+    expect(tree.root.left.data.key).to.eq(33);
     expect(tree.root.left.parent).to.eq(tree.root);
   });
 
   it('can delete when node has two children', function () {
     tree.delete(150);
 
-    expect(tree.root.right.key).to.eq(125);
+    expect(tree.root.right.data.key).to.eq(125);
     expect(tree.root.right.parent).to.eq(tree.root);
-    expect(tree.root.right.right.key).to.eq(175);
+    expect(tree.root.right.right.data.key).to.eq(175);
     expect(tree.root.right.right.parent).to.eq(tree.root.right);
   });
 
   it('can delete when node is a leaf', function () {
-    tree.delete(tree.root.left.key);
+    tree.delete(tree.root.left.data.key);
     // rebalancing results in 100 on left
-    expect(tree.root.left.key).to.eq(100);
+    expect(tree.root.left.data.key).to.eq(100);
   });
 
   it('throws error if node not found', function () {
@@ -200,14 +200,14 @@ describe('#min', function () {
     var tree = new Tree();
     tree.bulkInsert(9);
 
-    expect(tree.min().key).to.eq(9);
+    expect(tree.min().data.key).to.eq(9);
   });
 
   it('returns node with smallest key when tree has multiple levels', function () {
     var tree = new Tree();
     tree.bulkInsert(9, 10, 3, 5, 0, 4, 2, 7);
 
-    expect(tree.min().key).to.eq(0);
+    expect(tree.min().data.key).to.eq(0);
   });
 });
 
@@ -216,14 +216,14 @@ describe('#max', function () {
     var tree = new Tree();
     tree.bulkInsert(9);
 
-    expect(tree.max().key).to.eq(9);
+    expect(tree.max().data.key).to.eq(9);
   });
 
   it('returns node with smallest key when tree has multiple levels', function () {
     var tree = new Tree();
     tree.bulkInsert(9, 10, 3, 5, 0, 4, 2, 7);
 
-    expect(tree.max().key).to.eq(10);
+    expect(tree.max().data.key).to.eq(10);
   });
 });
 
@@ -275,19 +275,19 @@ describe('#search', function () {
   it('can return the matching node from left tree', function () {
     tree.bulkInsert(5, 3, 6, 4);
 
-    expect(tree.search(4).key).to.eq(4);
+    expect(tree.search(4).data.key).to.eq(4);
   });
 
   it('can return the matching node from right tree', function () {
     tree.bulkInsert(5, 3, 6, 4);
 
-    expect(tree.search(6).key).to.eq(6);
+    expect(tree.search(6).data.key).to.eq(6);
   });
 
   it('can return the matching node from root', function () {
     tree.bulkInsert(5);
 
-    expect(tree.search(5).key).to.eq(5);
+    expect(tree.search(5).data.key).to.eq(5);
   });
 
   it('returns null when the node is not found', function () {
@@ -302,14 +302,14 @@ describe('bulk insert', function () {
     var tree = new Tree();
     tree.bulkInsert(10, 5, 15, 3, 6, 12, 18, 21);
 
-    expect(tree.root.key).to.eq(10);
-    expect(tree.root.left.key).to.eq(5);
-    expect(tree.root.left.left.key).to.eq(3);
-    expect(tree.root.left.right.key).to.eq(6);
-    expect(tree.root.right.key).to.eq(15);
-    expect(tree.root.right.left.key).to.eq(12);
-    expect(tree.root.right.right.key).to.eq(18);
-    expect(tree.root.right.right.right.key).to.eq(21);
+    expect(tree.root.data.key).to.eq(10);
+    expect(tree.root.left.data.key).to.eq(5);
+    expect(tree.root.left.left.data.key).to.eq(3);
+    expect(tree.root.left.right.data.key).to.eq(6);
+    expect(tree.root.right.data.key).to.eq(15);
+    expect(tree.root.right.left.data.key).to.eq(12);
+    expect(tree.root.right.right.data.key).to.eq(18);
+    expect(tree.root.right.right.right.data.key).to.eq(21);
   });
 });
 
@@ -318,14 +318,14 @@ describe('#insert', function () {
     var tree = new Tree();
     tree.insert(5);
 
-    expect(tree.root.key).to.eq(5);
+    expect(tree.root.data.key).to.eq(5);
   });
 
   it('can accept a number when there is custom key', function () {
     var tree = new Tree({ key: 'index' });
     tree.insert(5);
 
-    expect(tree.root.index).to.eq(5);
+    expect(tree.root.data.index).to.eq(5);
   });
 
   it('inserts to root when there is no root', function () {
@@ -408,16 +408,16 @@ describe('#insert', function () {
     var tree = new Tree();
     tree.bulkInsert(1, 2, 3, 4, 5, 6);
 
-    expect(tree.root.key).to.eq(4);
-    expect(tree.root.left.key).to.eq(2);
+    expect(tree.root.data.key).to.eq(4);
+    expect(tree.root.left.data.key).to.eq(2);
     expect(tree.root.left.parent).to.eq(tree.root);
-    expect(tree.root.left.left.key).to.eq(1);
+    expect(tree.root.left.left.data.key).to.eq(1);
     expect(tree.root.left.left.parent).to.eq(tree.root.left);
-    expect(tree.root.left.right.key).to.eq(3);
+    expect(tree.root.left.right.data.key).to.eq(3);
     expect(tree.root.left.right.parent).to.eq(tree.root.left);
-    expect(tree.root.right.key).to.eq(5);
+    expect(tree.root.right.data.key).to.eq(5);
     expect(tree.root.right.parent).to.eq(tree.root);
-    expect(tree.root.right.right.key).to.eq(6);
+    expect(tree.root.right.right.data.key).to.eq(6);
     expect(tree.root.right.right.parent).to.eq(tree.root.right);
   });
 
@@ -455,16 +455,16 @@ describe('#insert', function () {
     var tree = new Tree();
     tree.bulkInsert(6, 5, 4, 3, 2, 1);
 
-    expect(tree.root.key).to.eq(3);
-    expect(tree.root.left.key).to.eq(2);
+    expect(tree.root.data.key).to.eq(3);
+    expect(tree.root.left.data.key).to.eq(2);
     expect(tree.root.left.parent).to.eq(tree.root);
-    expect(tree.root.left.left.key).to.eq(1);
+    expect(tree.root.left.left.data.key).to.eq(1);
     expect(tree.root.left.left.parent).to.eq(tree.root.left);
-    expect(tree.root.right.key).to.eq(5);
+    expect(tree.root.right.data.key).to.eq(5);
     expect(tree.root.right.parent).to.eq(tree.root);
-    expect(tree.root.right.left.key).to.eq(4);
+    expect(tree.root.right.left.data.key).to.eq(4);
     expect(tree.root.right.left.parent).to.eq(tree.root.right);
-    expect(tree.root.right.right.key).to.eq(6);
+    expect(tree.root.right.right.data.key).to.eq(6);
     expect(tree.root.right.right.parent).to.eq(tree.root.right);
   });
 
@@ -483,25 +483,25 @@ describe('#swap', function () {
   it('swaps the two elements when child is the left child', function () {
     tree.swap(root, root.left);
 
-    expect(tree.root.key).to.eq(25);
-    expect(tree.root.left.key).to.eq(50);
-    expect(tree.root.right.key).to.eq(75);
+    expect(tree.root.data.key).to.eq(25);
+    expect(tree.root.left.data.key).to.eq(50);
+    expect(tree.root.right.data.key).to.eq(75);
   });
 
   it('swaps the two elements when child is the right child', function () {
     tree.swap(root, root.right);
 
-    expect(tree.root.key).to.eq(75);
-    expect(tree.root.left.key).to.eq(25);
-    expect(tree.root.right.key).to.eq(50);
+    expect(tree.root.data.key).to.eq(75);
+    expect(tree.root.left.data.key).to.eq(25);
+    expect(tree.root.right.data.key).to.eq(50);
   });
 
   it('swaps two elements when first is child and second is parent', function () {
     tree.swap(root.right, root);
 
-    expect(tree.root.key).to.eq(75);
-    expect(tree.root.left.key).to.eq(25);
-    expect(tree.root.right.key).to.eq(50);
+    expect(tree.root.data.key).to.eq(75);
+    expect(tree.root.left.data.key).to.eq(25);
+    expect(tree.root.right.data.key).to.eq(50);
   });
 
   it('correctly updates the parents on the swapped elements', function () {
@@ -516,20 +516,20 @@ describe('#swap', function () {
     tree.bulkInsert(60, 80);
 
     tree.swap(root.right, root.right.left);
-    expect(tree.root.right.key).to.eq(60);
+    expect(tree.root.right.data.key).to.eq(60);
 
     tree.swap(tree.root.right, tree.root.right.right);
-    expect(tree.root.right.key).to.eq(80);
+    expect(tree.root.right.data.key).to.eq(80);
 
     tree.swap(tree.root, tree.root.right);
-    expect(tree.root.key).to.eq(80);
-    expect(tree.root.right.key).to.eq(50);
+    expect(tree.root.data.key).to.eq(80);
+    expect(tree.root.right.data.key).to.eq(50);
     expect(tree.root.right.parent).to.eq(tree.root);
     expect(tree.root.left.parent).to.eq(tree.root);
 
     tree.swap(tree.root.left, tree.root);
-    expect(tree.root.key).to.eq(25);
-    expect(tree.root.left.key).to.eq(80);
+    expect(tree.root.data.key).to.eq(25);
+    expect(tree.root.left.data.key).to.eq(80);
     expect(tree.root.left.parent).to.eq(tree.root);
     expect(tree.root.right.parent).to.eq(tree.root);
   });
@@ -539,10 +539,10 @@ describe('#swap', function () {
     // swap siblings
     tree.swap(tree.root.left.left, tree.root.left.right);
 
-    expect(tree.root.left.left.key).to.eq(33);
-    expect(tree.root.left.left.parent.key).to.eq(25);
-    expect(tree.root.left.right.key).to.eq(12);
-    expect(tree.root.left.right.parent.key).to.eq(25);
+    expect(tree.root.left.left.data.key).to.eq(33);
+    expect(tree.root.left.left.parent.data.key).to.eq(25);
+    expect(tree.root.left.right.data.key).to.eq(12);
+    expect(tree.root.left.right.parent.data.key).to.eq(25);
   });
 });
 
@@ -552,23 +552,23 @@ describe('#invert', function () {
     tree.bulkInsert(20, 25);
     tree.invert();
 
-    expect(tree.root.key).to.eq(25);
+    expect(tree.root.data.key).to.eq(25);
   });
 
   it('inverts all the subtrees', function () {
     var tree = new Tree();
     tree.bulkInsert(20, 25, 15, 22, 28);
-    expect(tree.root.key).to.eq(20);
-    expect(tree.root.left.key).to.eq(15);
-    expect(tree.root.right.key).to.eq(25);
+    expect(tree.root.data.key).to.eq(20);
+    expect(tree.root.left.data.key).to.eq(15);
+    expect(tree.root.right.data.key).to.eq(25);
 
     tree.invert();
 
-    expect(tree.root.key).to.eq(28);
-    expect(tree.root.left.key).to.eq(15);
-    expect(tree.root.right.key).to.eq(20);
-    expect(tree.root.right.left.key).to.eq(22);
-    expect(tree.root.right.right.key).to.eq(25);
+    expect(tree.root.data.key).to.eq(28);
+    expect(tree.root.left.data.key).to.eq(15);
+    expect(tree.root.right.data.key).to.eq(20);
+    expect(tree.root.right.left.data.key).to.eq(22);
+    expect(tree.root.right.right.data.key).to.eq(25);
   });
 });
 

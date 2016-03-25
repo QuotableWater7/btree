@@ -5,7 +5,11 @@ var _ = require('underscore');
 module.exports = function (opts) {
   opts = opts || {};
 
-  return _.extend({
+  return {
+    data: opts,
+    left: opts.left,
+    right: opts.right,
+    parent: opts.parent,
     seq: null,
     depth: null,
 
@@ -41,10 +45,10 @@ module.exports = function (opts) {
 
     largestChild: function (key) {
       if (this.right && this.left) {
-        return this.right[key] > this.left[key] ? this.right : this.left;
+        return this.right.data[key] > this.left.data[key] ? this.right : this.left;
       }
 
       return typeof this.right !== 'undefined' ? this.right : this.left;
     }
-  }, opts);
+  };
 }

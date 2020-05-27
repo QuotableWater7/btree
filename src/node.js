@@ -1,9 +1,9 @@
-'use strict';
+'use strict'
 
-var _ = require('underscore');
+var _ = require('underscore')
 
-module.exports = function (opts) {
-  opts = opts || {};
+module.exports = function(opts) {
+  opts = opts || {}
 
   return {
     data: opts,
@@ -13,42 +13,44 @@ module.exports = function (opts) {
     seq: null,
     depth: null,
 
-    setRightChild: function (node) {
-      this.right = node;
-      node.parent = this;
+    setRightChild: function(node) {
+      this.right = node
+      node.parent = this
     },
 
-    setLeftChild: function (node) {
-      this.left = node;
-      node.parent = this;
+    setLeftChild: function(node) {
+      this.left = node
+      node.parent = this
     },
 
-    isRoot: function () {
-      return !this.parent;
+    isRoot: function() {
+      return !this.parent
     },
 
-    isLeaf: function () {
-      return !this.left && !this.right;
+    isLeaf: function() {
+      return !this.left && !this.right
     },
 
-    hasOneChild: function () {
-      return (this.right && !this.left) || (this.left && !this.right);
+    hasOneChild: function() {
+      return (this.right && !this.left) || (this.left && !this.right)
     },
 
-    isRightChildOfParent: function (parent) {
-      return parent && parent.right === this;
+    isRightChildOfParent: function(parent) {
+      return parent && parent.right === this
     },
 
-    isLeftChildOfParent: function (parent) {
-      return parent && parent.left === this;
+    isLeftChildOfParent: function(parent) {
+      return parent && parent.left === this
     },
 
-    largestChild: function (key) {
+    largestChild: function(key) {
       if (this.right && this.left) {
-        return this.right.data[key] > this.left.data[key] ? this.right : this.left;
+        return this.right.data[key] > this.left.data[key]
+          ? this.right
+          : this.left
       }
 
-      return typeof this.right !== 'undefined' ? this.right : this.left;
+      return typeof this.right !== 'undefined' ? this.right : this.left
     }
-  };
+  }
 }

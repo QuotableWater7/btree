@@ -300,24 +300,21 @@ module.exports = function(opts) {
     },
 
     invert: function(node) {
-      var node = arguments.length > 0 ? node : this.root
+      return this._invert(node || this.root)
+    },
+
+    _invert: function(node) {
       if (!node) {
-        return
-      }
-      if (this.height(node) === 1) {
-        return
+        return null
       }
 
-      this.invert(node.left)
-      this.invert(node.right)
+      const leftTree = this._invert(node.left)
+      const rightTree = this._invert(node.right)
 
-      var parent = node
-      var child = node.largestChild(this.key)
-      this.swap(parent, child)
+      node.left = rightTree
+      node.right = leftTree
 
-      if (child.isRoot()) {
-        this.root = child
-      }
+      return node
     },
 
     swap: function(n1, n2) {

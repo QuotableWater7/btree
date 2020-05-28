@@ -572,31 +572,7 @@ describe('#swap', function() {
   })
 })
 
-describe('#invert', function() {
-  it('puts the max value at the root', function() {
-    var tree = new Tree()
-    tree.bulkInsert(20, 25)
-    tree.invert()
-
-    expect(tree.root.data.key).to.eq(25)
-  })
-
-  it('inverts all the subtrees', function() {
-    var tree = new Tree()
-    tree.bulkInsert(20, 25, 15, 22, 28)
-    expect(tree.root.data.key).to.eq(20)
-    expect(tree.root.left.data.key).to.eq(15)
-    expect(tree.root.right.data.key).to.eq(25)
-
-    tree.invert()
-
-    expect(tree.root.data.key).to.eq(28)
-    expect(tree.root.left.data.key).to.eq(15)
-    expect(tree.root.right.data.key).to.eq(20)
-    expect(tree.root.right.left.data.key).to.eq(22)
-    expect(tree.root.right.right.data.key).to.eq(25)
-  })
-})
+describe('#invert', function() {})
 
 describe('#inOrderTraversal', function() {
   it('yields the tree nodes in order, with metadata', function() {
